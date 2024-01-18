@@ -8,48 +8,52 @@
 </body>
 
 <table>
-	<tr>
-		<td><div id="obsPerYear"></div></td>
-		<td><div class="divTableCell" id="obsPerMonth"></div></td>
-		<td><div class="divTableCell" id="obsPerHour"></div></td>
-	</tr>
-	<tr>
-		<td><div id="obsPerHourJanuary"></div></td>
-		<td><div id="obsPerHourFebruary"></div></td>
-		<td><div id="obsPerHourMarch"></div></td>
-	</tr>
-	<tr>
-		<td><div id="obsPerHourApril"></div></td>
-		<td><div id="obsPerHourMay"></div></td>
-		<td><div id="obsPerHourJune"></div></td>
-	</tr>
-	<tr>
-		<td><div id="obsPerHourJuly"></div></td>
-		<td><div id="obsPerHourAugust"></div></td>
-		<td><div id="obsPerHourSeptember"></div></td>
-	</tr>
-	<tr>
-		<td><div id="obsPerHourOctober"></div></td>
-		<td><div id="obsPerHourNovember"></div></td>
-		<td><div id="obsPerHourDecember"></div></td>
-	</tr>
-	<tr>
-		<td colspan="3"><div id="dayByDayObs"></div> </td>
-	</tr>
-	<tr>
-		<td colspan="3"><div id="dayByDayDeerObs"></div> </td>
-	</tr>
-	<tr>
-		<td><a href="camera.html?name=TOP"><div class="graphLink" id="obsPerHourTopCamera"></div></a></td>
-		<td><a href="camera.html?name=MIDDLE"><div class="graphLink" id="obsPerHourMiddleCamera"></div></a></td>
-		<td><a href="camera.html?name=HOUSE"><div class="graphLink" id="obsPerHourHouseCamera"></div></a></td>
-	</tr>
+    <tr>
+	<td><div id="obsPerYear"></div></td>
+	<td><div class="divTableCell" id="obsPerMonth"></div></td>
+	<td><div class="divTableCell" id="obsPerHour"></div></td>
+    </tr>
+    <tr>
+	<td><div id="obsPerYearStackedCamera"></div></td>
+	<td></td>
+	<td></td>
+    </tr>
+	<td><div id="obsPerHourJanuary"></div></td>
+	<td><div id="obsPerHourFebruary"></div></td>
+	<td><div id="obsPerHourMarch"></div></td>
+    </tr>
+    <tr>
+	<td><div id="obsPerHourApril"></div></td>
+	<td><div id="obsPerHourMay"></div></td>
+	<td><div id="obsPerHourJune"></div></td>
+    </tr>
+    <tr>
+	<td><div id="obsPerHourJuly"></div></td>
+	<td><div id="obsPerHourAugust"></div></td>
+	<td><div id="obsPerHourSeptember"></div></td>
+    </tr>
+    <tr>
+	<td><div id="obsPerHourOctober"></div></td>
+	<td><div id="obsPerHourNovember"></div></td>
+	<td><div id="obsPerHourDecember"></div></td>
+    </tr>
+    <tr>
+	<td colspan="3"><div id="dayByDayObs"></div> </td>
+    </tr>
+    <tr>
+	<td colspan="3"><div id="dayByDayDeerObs"></div> </td>
+    </tr>
+    <tr>
+	<td><a href="camera.html?name=TOP"><div class="graphLink" id="obsPerHourTopCamera"></div></a></td>
+	<td><a href="camera.html?name=MIDDLE"><div class="graphLink" id="obsPerHourMiddleCamera"></div></a></td>
+	<td><a href="camera.html?name=HOUSE"><div class="graphLink" id="obsPerHourHouseCamera"></div></a></td>
+    </tr>
 
-	<tr>
-		<td><a href="camera.html?name=TOP"><div class="graphLink" id="deerObsPerHourTopCamera"></div></td>
-		<td><a href="camera.html?name=MIDDLE"><div class="graphLink" id="deerObsPerHourMiddleCamera"></div></a></td>
-		<td><a href="camera.html?name=HOUSE"><div class="graphLink" id="deerObsPerHourHouseCamera"></div></a></td>
-	</tr>
+    <tr>
+	<td><a href="camera.html?name=TOP"><div class="graphLink" id="deerObsPerHourTopCamera"></div></td>
+	<td><a href="camera.html?name=MIDDLE"><div class="graphLink" id="deerObsPerHourMiddleCamera"></div></a></td>
+	<td><a href="camera.html?name=HOUSE"><div class="graphLink" id="deerObsPerHourHouseCamera"></div></a></td>
+    </tr>
 </table>
 
 <div id="container"></div>
@@ -63,11 +67,11 @@
 // Extract what years the code is active:
 
 const yearArray = DATA.reduce(function (a, d) {
-       if (a.indexOf(d.year) === -1) {
-         a.push(d.year);
-       }
-       return a;
-    }, []);
+    if (a.indexOf(d.year) === -1) {
+     a.push(d.year);
+   }
+    return a;
+}, []);
 yearArray.sort();
 
 // GLOBALS
@@ -75,6 +79,9 @@ yearArray.sort();
 const yearObsObject = [];
 const monthObsObject = [];
 const hourObsObject = [];
+
+const obsPerYearStackedCameraObject = [];
+
 const monthlyHourObsObject = [];
 const dayByDayObsObject = [];
 const dayByDayDeerObsObject = [];
@@ -89,27 +96,21 @@ const deerObsPerHourHouseCameraObject = [];
 // First and last day in the dataset
 let oldestDate = new Date();
 let newestDate = new Date();
-// console.log("newestDate = ", newestDate);
 DATA.forEach((image) => {
-	const tmpDate = new Date(image.year, (image.month-1), image.day);
-	if(tmpDate < oldestDate){
-		oldestDate = new Date(tmpDate);
-	}
-	if(tmpDate > newestDate){
-		newestDate = new Date(tmpDate);
-	}
+    const tmpDate = new Date(image.year, (image.month-1), image.day);
+    if(tmpDate < oldestDate){
+	oldestDate = new Date(tmpDate);
+    }
+    if(tmpDate > newestDate){
+	newestDate = new Date(tmpDate);
+    }
 });
-//console.log("Oldest date: " + oldestDate);
-//console.log("Newest date: " + newestDate);
 
-
-// Other stuff
+// Total obs per year
 for( let i = 0; i < yearArray.length; i++ ) {
-    // console.log("Processing year: " + yearArray[i] );
     const thisYear = DATA.filter(function(d){
 	return yearArray[i] === d.year;
     });
-    // console.log("There are " + thisYear.length + " observations in " + yearArray[i]);
     const initialValue = 0;
     const totalCount = thisYear.reduce(function (a, d) {
 	return a = a + +d.count;
@@ -117,7 +118,6 @@ for( let i = 0; i < yearArray.length; i++ ) {
     initialValue);
 
     // console.log("Total animal count for year " + yearArray[i] + " is: " + totalCount);
-
     const obsObject = {
 	year: yearArray[i],
 	observations: totalCount
@@ -126,6 +126,35 @@ for( let i = 0; i < yearArray.length; i++ ) {
     // console.log("Printing yearObsObject");
     // console.log(yearObsObject);
 }
+
+
+// Total obs per year - stacked by camera : obsPerYearStackedCamera
+yearArray.forEach( (year) => {
+	const thisYear = DATA.filter(function(d){
+		return year === d.year;
+	});
+	//arr.push( year );
+	cameraArray.forEach( (camera) => {
+		// Count number of images on that camera
+		const x = thisYear.reduce(function (a, d) {
+			return a + (d.camera === camera);	
+		},0);
+		let obj = {};
+		obj['year'] = year;
+		obj['camera'] = camera;
+		obj['observations'] = x;
+	//	arr.push(obj);
+		obsPerYearStackedCameraObject.push( obj );
+	});
+
+
+	// arr now have ["TOP", 10, 20, 30]
+	// want to produce:
+	// {year:"2024", camera :"TOP", observations: 100}
+	// obsPerYearStackedCameraObject.push( arr );
+});
+
+// console.log(obsPerYearStackedCameraObject);
 
 // Observations by month (irrespective of year)
 for( let i = 1; i <= 12; i++ ) {
@@ -369,6 +398,8 @@ for(let i = 0; i<= 23; i++){
 createHBarGraph("#obsPerYear", "Yearly animal observations across all cameras", yearObsObject, "year", "observations");
 createHBarGraph("#obsPerMonth", "Total animal observations across all cameras, per month", monthObsObject, "month", "observations");
 createHBarGraph("#obsPerHour", "Total animal observations across all cameras, per hour", hourObsObject, "hour", "observations");
+
+createStackedHBarGraph("#obsPerYearStackedCamera", "Yearly obs by camera", obsPerYearStackedCameraObject, "year", "camera", "observations");
 
 for(let i=0; i<12; i++){
 	// console.log(monthArray[i]);
