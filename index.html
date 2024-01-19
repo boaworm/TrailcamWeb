@@ -109,22 +109,17 @@ DATA.forEach((image) => {
 // Total obs per year
 for( let i = 0; i < yearArray.length; i++ ) {
     const thisYear = DATA.filter(function(d){
-	return yearArray[i] === d.year;
+		return yearArray[i] === d.year;
     });
-    const initialValue = 0;
     const totalCount = thisYear.reduce(function (a, d) {
-	return a = a + +d.count;
-    }, 
-    initialValue);
+		return a = a + +d.count;
+    }, 0);
 
-    // console.log("Total animal count for year " + yearArray[i] + " is: " + totalCount);
     const obsObject = {
-	year: yearArray[i],
-	observations: totalCount
+		year: yearArray[i],
+		observations: totalCount
     };
     yearObsObject.push( obsObject );
-    // console.log("Printing yearObsObject");
-    // console.log(yearObsObject);
 }
 
 
@@ -133,17 +128,19 @@ yearArray.forEach( (year) => {
 	const thisYear = DATA.filter(function(d){
 		return year === d.year;
 	});
-	//arr.push( year );
 	cameraArray.forEach( (camera) => {
 		// Count number of images on that camera
-		const x = thisYear.reduce(function (a, d) {
-			return a + (d.camera === camera);	
+		const animalCount = thisYear.reduce(function (a, d) {
+			if(d.camera === camera){
+				return a + +d.count;
+			}else{
+				return a;
+			}
 		},0);
 		let obj = {};
 		obj['year'] = year;
 		obj['camera'] = camera;
-		obj['observations'] = x;
-	//	arr.push(obj);
+		obj['observations'] = animalCount;
 		obsPerYearStackedCameraObject.push( obj );
 	});
 
@@ -399,7 +396,7 @@ createHBarGraph("#obsPerYear", "Yearly animal observations across all cameras", 
 createHBarGraph("#obsPerMonth", "Total animal observations across all cameras, per month", monthObsObject, "month", "observations");
 createHBarGraph("#obsPerHour", "Total animal observations across all cameras, per hour", hourObsObject, "hour", "observations");
 
-createStackedHBarGraph("#obsPerYearStackedCamera", "Yearly obs by camera", obsPerYearStackedCameraObject, "year", "camera", "observations");
+createStackedHBarGraph("#obsPerYearStackedCamera", "Yearly observations - by camera", obsPerYearStackedCameraObject, "year", "camera", "observations");
 
 for(let i=0; i<12; i++){
 	// console.log(monthArray[i]);

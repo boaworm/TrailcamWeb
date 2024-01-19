@@ -69,7 +69,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
     // Specific to Stacked BHar
 	var color = d3.scaleOrdinal()
 		.domain(distinctBarLabels)
-		.range(['#e41a1c','#377eb8','#4daf4a'])
+		.range(d3.schemeSet2);
 
 	// Add X axis
 	var x = d3.scaleBand()
@@ -79,6 +79,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		svg.append("g")
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(x).tickSizeOuter(0));
+
 	// Add Y axis
 	var y = d3.scaleLinear()
 		.domain([0, Math.ceil( 1.1 * maxPerRow)])
@@ -147,6 +148,7 @@ function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthSca
     	function(acc, obj){
 		return Math.max(obj[rightKey], acc);
 	}, 0);
+
     // append the svg object to the body of the page
     let svg = d3.select(divName)
       .append("svg")
