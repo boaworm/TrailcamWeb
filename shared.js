@@ -25,7 +25,6 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 	// expect obj { barLabel: ... , groupLabel: ... , valueLabel: ... } 
 	// for ex	{ year: 2010, camera: "TOP", observations: 100 }
 
-	//console.log(dataObject);
 	// figure out X labels, and combined max X label (for Y scale)
 	var distinctBarLabels = [];
 	dataObject.forEach( (row) => {
@@ -88,9 +87,9 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		.call(d3.axisLeft(y));
 
 	var stackedData = d3.stack()
-		.keys(d3.union(dataObject.map(d => d.camera)))
+		.keys(d3.union(dataObject.map(d => d[groupLabel])))
 		.value(([,group], key) => group.get(key).observations)
-		(d3.index(dataObject, d => d.year, d => d.camera));
+		(d3.index(dataObject, d => d[barLabel], d => d[groupLabel]));
 
 	// Show the bars
 	svg.append("g")

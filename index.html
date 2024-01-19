@@ -15,8 +15,8 @@
     </tr>
     <tr>
 	<td><div id="obsPerYearStackedCamera"></div></td>
-	<td></td>
-	<td></td>
+	<td><div id="obsPerMonthStackedCamera"></div></td>
+	<td><div id="obsPerHourStackedCamera"></div></td>
     </tr>
 	<td><div id="obsPerHourJanuary"></div></td>
 	<td><div id="obsPerHourFebruary"></div></td>
@@ -81,6 +81,8 @@ const monthObsObject = [];
 const hourObsObject = [];
 
 const obsPerYearStackedCameraObject = [];
+const obsPerMonthStackedCameraObject = [];
+const obsPerHourStackedCameraObject = [];
 
 const monthlyHourObsObject = [];
 const dayByDayObsObject = [];
@@ -123,7 +125,7 @@ for( let i = 0; i < yearArray.length; i++ ) {
 }
 
 
-// Total obs per year - stacked by camera : obsPerYearStackedCamera
+// Total obs per year - stacked by camera : obsPerYearStackedCameraObject
 yearArray.forEach( (year) => {
 	const thisYear = DATA.filter(function(d){
 		return year === d.year;
@@ -143,13 +145,33 @@ yearArray.forEach( (year) => {
 		obj['observations'] = animalCount;
 		obsPerYearStackedCameraObject.push( obj );
 	});
-
-
-	// arr now have ["TOP", 10, 20, 30]
-	// want to produce:
-	// {year:"2024", camera :"TOP", observations: 100}
-	// obsPerYearStackedCameraObject.push( arr );
 });
+
+// total obs per month - stacked by camera : obsPerMonthStackedCameraObject
+for(var month=1;month<=12;month++){
+	const thisMonth = DATA.filter(function(d){
+		return month == d.month; // Deliberate == to match 3 and 03
+	});
+	cameraArray.forEach( (camera) => {
+		// Count number of images on that camera
+		const animalCount = thisMonth.reduce(function (a, d) {
+			if(d.camera == camera){
+				return a + +d.count;
+			}else{
+				return a;
+			}
+		},0);
+		let obj = {};
+		obj['month'] = month;
+		obj['camera'] = camera;
+		obj['observations'] = animalCount;
+		//console.log("pushing object : ", obj);
+		obsPerMonthStackedCameraObject.push( obj );
+	});
+
+
+
+}
 
 // console.log(obsPerYearStackedCameraObject);
 
@@ -188,8 +210,6 @@ for( let i = 0; i<= 23; i++){
 
 // Observations by hour, grouped by month (12 graphs coming...)
 for( let theMonth = 1; theMonth<= 12; theMonth++ ){
-
-
 	let mhObs = [];
 	for( let theHour = 0; theHour <= 23; theHour++){
 		const thisHour = DATA.filter(function(d){
@@ -397,6 +417,8 @@ createHBarGraph("#obsPerMonth", "Total animal observations across all cameras, p
 createHBarGraph("#obsPerHour", "Total animal observations across all cameras, per hour", hourObsObject, "hour", "observations");
 
 createStackedHBarGraph("#obsPerYearStackedCamera", "Yearly observations - by camera", obsPerYearStackedCameraObject, "year", "camera", "observations");
+createStackedHBarGraph("#obsPerMonthStackedCamera", "Monthly observations - by camera", obsPerMonthStackedCameraObject, "month", "camera", "observations");
+createStackedHBarGraph("#obsPerHourStackedCamera", "Hourly observations - by camera", obsPerHourStackedCameraObject, "hour", "camera", "observations");
 
 for(let i=0; i<12; i++){
 	// console.log(monthArray[i]);
