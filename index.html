@@ -168,12 +168,7 @@ for(var month=1;month<=12;month++){
 		//console.log("pushing object : ", obj);
 		obsPerMonthStackedCameraObject.push( obj );
 	});
-
-
-
 }
-
-// console.log(obsPerYearStackedCameraObject);
 
 // Observations by month (irrespective of year)
 for( let i = 1; i <= 12; i++ ) {
@@ -194,7 +189,7 @@ for( let i = 1; i <= 12; i++ ) {
 }
 
 // Observations by hour (irrespective of month, year)
-for( let i = 0; i<= 23; i++){
+for(let i = 0; i<= 23; i++){
 	const thisHour = DATA.filter(function(d){
 		return i == d.hour; // delibreate match of 4 == 04 etc
 	});
@@ -207,6 +202,30 @@ for( let i = 0; i<= 23; i++){
 	};
 	hourObsObject.push( obsObject );
 }
+
+// Observations by hour - stacked by camera
+for(let hour=0;hour<=23;hour++){
+	const thisHour = DATA.filter(function(d){
+		return hour == d.hour; // Deliberate == to match 3 and 03
+	});
+	cameraArray.forEach( (camera) => {
+		// Count number of animal observations on that camera
+		const animalCount = thisHour.reduce(function (a, d) {
+			if(d.camera == camera){
+				return a + +d.count;
+			}else{
+				return a;
+			}
+		},0);
+		let obj = {};
+		obj['hour'] = hour;
+		obj['camera'] = camera;
+		obj['observations'] = animalCount;
+		obsPerHourStackedCameraObject.push( obj );
+	});
+}
+
+
 
 // Observations by hour, grouped by month (12 graphs coming...)
 for( let theMonth = 1; theMonth<= 12; theMonth++ ){

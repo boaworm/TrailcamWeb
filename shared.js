@@ -4,10 +4,10 @@
 function transformMapToD3DataArray(theMap) {
     m = [];
     for( const [key, value] of theMap.entries()){
-	const o = {};
-	o["year"] = key;
-	o["observations"] = value;
-	m.push(o);
+		const o = {};
+		o["year"] = key;
+		o["observations"] = value;
+		m.push(o);
     }
     return m;
 }
