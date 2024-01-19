@@ -148,6 +148,13 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 
 // Repeatable graph creation, HBAR
 function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthScale = 1, heightScale = 1){
+	// Remove old SVGs
+	const myNode = document.getElementById(divName.substring(1));
+	while(myNode && myNode.firstChild){
+		myNode.removeChild(myNode.lastChild);
+	}
+
+	//
     let margin = {top: 30, right: 30, bottom: 70, left: 60},
 	width = (460*widthScale) - margin.left - margin.right,
 	height = (400*heightScale) - margin.top - margin.bottom;

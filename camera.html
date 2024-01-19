@@ -1,32 +1,57 @@
 <!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Trailcam visualization - select camera</title>
 
-<script src="d3.v7.js"></script>
-<script src="shared.js"></script>
-<script src="vue.global.prod.js"></script>
-<script src="oklahoma_observations.js"></script>
-<script src="deer_observations.json.js"></script>
+	<script src="d3.v7.js"></script>
+	<script src="shared.js"></script>
+	<script src="oklahoma_observations.js"></script>
+	<script src="deer_observations.json.js"></script>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 
-<script setup>
-	import { ref } from 'vue'
-	const message = ref('Hello, World')
-</script>
+	<script>
+		APP = Vue.createApp({
+			props: {},
+			data: function() {
+				return {
+					selectedCamera : "TOP",
+				};
+			},
+			methods: {
+				cameraUpdate : function(){
+					renderGraphs(this.selectedCamera);
+				}
+			},
+			computed: {
+				q1 : function(){
+					return ["obsPerHourJanuary","obsPerHourFebruary","obsPerHourMarch"];
+				},
+				q2 : function(){
+					return ["obsPerHourApril","obsPerHourMay","obsPerHourJune"];
+				},
+				q3 : function(){
+					return ["obsPerHourJuly","obsPerHourAugust","obsPerHourSeptember"];
+				},
+				q4 : function(){
+					return ["obsPerHourOctober","obsPerHourNovember","obsPerHourDecember"];
+				}
+			},
+			mounted: function() {
+				renderGraphs(this.selectedCamera);
+			}
+		});
+	</script>
 
-
-<header>
-	<title>Trailcam visualization</title>
-</header>
+</head>
 
 <body>
-
-<template>
-	<div id="app">{{ message }}</div>
-</template>
-
+<div id="cameraApp">
 
 <table>
 	<tr>
 		<td>
-		<select name="cameraSelection" id="cameraSelection">
+		Select a camera: <select @change="cameraUpdate()" class="form-control" v-model="selectedCamera">
 			<option value="TOP">TOP</option>
 			<option value="MIDDLE">MIDDLE</option>
 			<option value="HOUSE">HOUSE</option>
@@ -41,24 +66,16 @@
 		<td><div class="divTableCell" id="obsPerHour"></div></td>
 	</tr>
 	<tr>
-		<td><div id="obsPerHourJanuary"></div></td>
-		<td><div id="obsPerHourFebruary"></div></td>
-		<td><div id="obsPerHourMarch"></div></td>
+		<td v-for="n in q1"><div :id="n"></div></td>
 	</tr>
 	<tr>
-		<td><div id="obsPerHourApril"></div></td>
-		<td><div id="obsPerHourMay"></div></td>
-		<td><div id="obsPerHourJune"></div></td>
+		<td v-for="n in q2"><div :id="n"></div></td>
 	</tr>
 	<tr>
-		<td><div id="obsPerHourJuly"></div></td>
-		<td><div id="obsPerHourAugust"></div></td>
-		<td><div id="obsPerHourSeptember"></div></td>
+		<td v-for="n in q3"><div :id="n"></div></td>
 	</tr>
 	<tr>
-		<td><div id="obsPerHourOctober"></div></td>
-		<td><div id="obsPerHourNovember"></div></td>
-		<td><div id="obsPerHourDecember"></div></td>
+		<td v-for="n in q4"><div :id="n"></div></td>
 	</tr>
 	<tr>
 		<td colspan="3"><div id="dayByDayObs"></div> </td>
@@ -75,13 +92,19 @@
 	</tr>
 
 </table>
-<div id="container"></div>
-<a href="index.html">Back</a>
+</div>
 
-</body>
+<a href="index.html">Back</a>
+<!--
+<div id="container"></div>
+-->
+
+
+<!-- Script code -->
 
 
 <script>
+	/*
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const cameraName = urlParams.get('name');
@@ -90,9 +113,13 @@ if(cameraName === "TOP" || cameraName === "MIDDLE" || cameraName === "HOUSE"){
 }else{
 
 }
-
+*/
+// let cameraName = selectedCamera;
+// let cameraName = selectedCamera;
 ///////// BEGIN MAIN DATA PROCESSING ////////////
 // Extract what years the code is active:
+
+function renderGraphs(cameraName){
 
 const yearArray = DATA.reduce(function (a, d) {
        if (a.indexOf(d.year) === -1) {
@@ -335,4 +362,12 @@ createHBarGraph("#obsPerHourThisCamera", "Total animals on this camera, by hour"
 
 createHBarGraph("#deerObsPerHourThisCamera", "Total deer on this camera, by hour", deerObsPerHourThisCameraObject, "hour", "observations");
 
+ }
 </script>
+
+	<script>
+		APP.mount('#cameraApp');
+	</script>
+</body>
+
+</html>
