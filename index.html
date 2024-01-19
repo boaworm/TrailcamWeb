@@ -38,11 +38,18 @@
 	<td><div id="obsPerHourDecember"></div></td>
     </tr>
     <tr>
-	<td colspan="3"><div id="dayByDayObs"></div> </td>
+		<td colspan="3"><div id="dayByDayObs"></div> </td>
     </tr>
     <tr>
-	<td colspan="3"><div id="dayByDayDeerObs"></div> </td>
+		<td colspan="3"><div id="dayByDayDeerObs"></div> </td>
     </tr>
+    <tr>
+		<td colspan="3"><div id="weekByWeekObs"></div> </td>
+    </tr>
+    <tr>
+		<td colspan="3"><div id="weekByWeekDeerObs"></div> </td>
+    </tr>
+
     <tr>
 	<td><a href="camera.html?name=TOP"><div class="graphLink" id="obsPerHourTopCamera"></div></a></td>
 	<td><a href="camera.html?name=MIDDLE"><div class="graphLink" id="obsPerHourMiddleCamera"></div></a></td>
@@ -87,6 +94,10 @@ const obsPerHourStackedCameraObject = [];
 const monthlyHourObsObject = [];
 const dayByDayObsObject = [];
 const dayByDayDeerObsObject = [];
+
+const weekByWeekObsObject = [];
+const weekByWeekDeerObsObject = [];
+
 const obsPerHourTopCameraObject = [];
 const obsPerHourMiddleCameraObject = [];
 const obsPerHourHouseCameraObject = [];
@@ -291,6 +302,54 @@ imagesWithDeer.forEach((image) => {
 });
 // console.log("found ", imagesWithDeer.length, " images with deer in them");
 
+//// Obs by week - stacked by camera
+for(let week=1; week <= 52; week++){
+	const thisWeek = DATA.filter(function(d){
+		const str = d.year + "-" + d.month + "-" + d.day +"T00:00:00-06:00";
+		const today = new Date(str);
+		return week == today.getWeek();
+	});
+
+	cameraArray.forEach( (camera) => {
+		// General animal obs
+		const animalCount = thisWeek.reduce(function(a,d){
+			if(d.camera === camera){
+				return a + +d.count;
+			}else{
+				return a;
+			}
+		},0);
+		let obj = {};
+		obj['week'] = week;
+		obj['camera'] = camera;
+		obj['observations'] = animalCount;
+		weekByWeekObsObject.push( obj );
+
+
+		// Do deer obs in here as well
+		const deerCount = thisWeek.reduce(function(a,d){
+			if(d.camera === camera && 
+				imagesWithDeerMap.has(d.image)){
+				return a + 1;
+			}else{
+				return a;
+			}
+		},0);
+		obj = {};
+		obj['week'] = week;
+		obj['camera'] = camera;
+		obj['observations'] = deerCount;
+		weekByWeekDeerObsObject.push( obj );
+	});
+
+}
+
+
+
+//// Deer bbs by week - stacked by camera
+
+
+
 dayIndex = new Date(oldestDate);
 /*
 console.log("deer: dayIndex = " , dayIndex);
@@ -447,9 +506,12 @@ for(let i=0; i<12; i++){
 
 
 createHBarGraph("#dayByDayObs", "Total animal observations per day", dayByDayObsObject, "day", "observations", 3, 1);
-let title = "Total deer observations per day (with " + (100*deerConfidenceThreshold) + "% confidence)";
+var title = "Total deer observations per day (with " + (100*deerConfidenceThreshold) + "% confidence)";
 createHBarGraph("#dayByDayDeerObs", title, dayByDayDeerObsObject, "day", "observations", 3, 1);
 
+createStackedHBarGraph("#weekByWeekObs", "Total animal observations per week", weekByWeekObsObject, "week","camera", "observations", 3, 1);
+title = "Total deer observations per week (with " + (100*deerConfidenceThreshold) + "% confidence)";
+createStackedHBarGraph("#weekByWeekDeerObs", title, weekByWeekDeerObsObject, "week", "camera", "observations", 3, 1);
 
 createHBarGraph("#obsPerHourTopCamera", "Total animals on Top camera, by hour", obsPerHourTopCameraObject, "hour", "observations");
 createHBarGraph("#obsPerHourMiddleCamera", "Total animals on Middle camera, by hour", obsPerHourMiddleCameraObject, "hour", "observations");
