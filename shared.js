@@ -75,9 +75,13 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		.domain(distinctBarLabels)
 		.range([0, width])
 		.padding([0.2])
-		svg.append("g")
-			.attr("transform", "translate(0," + height + ")")
-			.call(d3.axisBottom(x).tickSizeOuter(0));
+
+    svg.append("g")
+		.attr("transform", "translate(0," + height + ")")
+		.call(d3.axisBottom(x))
+			.selectAll("text")
+			.attr("transform", "translate(-10,0)rotate(-45)")
+			.style("text-anchor", "end");
 
 	// Add Y axis
 	var y = d3.scaleLinear()
@@ -113,7 +117,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		.enter()
 		.append("circle")
 			.attr("cx", function(d,i){ return 30 + i*100;})
-			.attr("cy", function(d,i){ return height+30})
+			.attr("cy", function(d,i){ return height+50})
 			.attr("r", 7)
 			.style("fill", function(d){ return color(d)})
 
@@ -122,7 +126,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		.enter()
 		.append("text")
 			.attr("x", function(d,i){ return 45 + i*100;})
-			.attr("y", function(d,i){ return height+30;}) 
+			.attr("y", function(d,i){ return height+50;}) 
 			.style("fill", function(d){ return color(d)})
 			.text(function(d){ return d})
 			.attr("text-anchor", "left")
@@ -163,11 +167,11 @@ function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthSca
 	.domain( dataObject.map(function(d) { return d[leftKey] }))
 	.padding(0.2);
     svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-	.attr("transform", "translate(-10,0)rotate(-45)")
-	.style("text-anchor", "end");
+		.attr("transform", "translate(0," + height + ")")
+		.call(d3.axisBottom(x))
+			.selectAll("text")
+			.attr("transform", "translate(-10,0)rotate(-45)")
+			.style("text-anchor", "end");
 
     // y axis
     let y = d3.scaleLinear()
@@ -179,20 +183,20 @@ function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthSca
     // Bars
 
     svg.selectAll("mybar")
-      .data(dataObject)
-      .enter()
-      .append("rect")
-	.attr("x", function(d) { return x(d[leftKey]); })
-	.attr("y", function(d) { return y(d[rightKey]); })
-	.attr("width", x.bandwidth())
-	.attr("height", function(d) { return height - y(d[rightKey]); })
-	.attr("fill", "#69b3a2");
+		.data(dataObject)
+		.enter()
+		.append("rect")
+			.attr("x", function(d) { return x(d[leftKey]); })
+			.attr("y", function(d) { return y(d[rightKey]); })
+			.attr("width", x.bandwidth())
+			.attr("height", function(d) { return height - y(d[rightKey]); })
+			.attr("fill", "#69b3a2");
 
     svg.append("text")
-	.attr("x", (width / 2))
-	.attr("y", 0 - (margin.top / 2))
-	.attr("text-anchor", "middle")
-	.style("font-size", "16px")
-	.text(title);
+		.attr("x", (width / 2))
+		.attr("y", 0 - (margin.top / 2))
+		.attr("text-anchor", "middle")
+		.style("font-size", "16px")
+		.text(title);
 }
 
