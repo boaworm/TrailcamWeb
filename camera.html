@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 
-<header><title>Trailcam visualization</title></header>
+<script src="d3.v7.js"></script>
+<script src="shared.js"></script>
+<script src="vue.global.prod.js"></script>
+<script src="oklahoma_observations.js"></script>
+<script src="deer_observations.json.js"></script>
+
+<script setup>
+	import { ref } from 'vue'
+	const message = ref('Hello, World')
+</script>
+
+
+<header>
+	<title>Trailcam visualization</title>
+</header>
+
 <body>
-</body>
+
+<template>
+	<div id="app">{{ message }}</div>
+</template>
+
 
 <table>
-	<!--
 	<tr>
 		<td>
 		<select name="cameraSelection" id="cameraSelection">
@@ -17,7 +35,6 @@
 		<td></td>
 		<td></td>
 	</tr>
-	-->
 	<tr>
 		<td><div id="obsPerYear"></div></td>
 		<td><div class="divTableCell" id="obsPerMonth"></div></td>
@@ -58,15 +75,13 @@
 	</tr>
 
 </table>
+<div id="container"></div>
 <a href="index.html">Back</a>
 
-<div id="container"></div>
-<script src="d3.v7.js"></script>
-<script src="shared.js"></script>
-<script src="oklahoma_observations.js"></script>
-<script src="deer_observations.json.js"></script>
-<script>
+</body>
 
+
+<script>
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const cameraName = urlParams.get('name');
