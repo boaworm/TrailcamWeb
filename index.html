@@ -267,7 +267,7 @@ while( dayIndex <= newestDate ){
 	const thisDayObj = DATA.filter(function(d){
 		return d.year == dayIndex.getFullYear() &&
 			d.month == (dayIndex.getMonth()+1) && 
-			d.day == (dayIndex.getDate()+1);
+			d.day == dayIndex.getDate();
 	});
 	const totalObsCount = thisDayObj.reduce(function(a, d){
 		return a = a + +d.count;
@@ -347,7 +347,7 @@ while( dayIndex <= newestDate ){
 	const thisDayObj = DATA.filter(function(d){
 		return d.year == dayIndex.getFullYear() &&
 			d.month == (dayIndex.getMonth()+1) && 
-			d.day == (dayIndex.getDate()+1) &&
+			d.day == dayIndex.getDate() &&
 			imagesWithDeerMap.has(d.image);
 	});
 
