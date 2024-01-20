@@ -1,4 +1,3 @@
-
 Date.prototype.getWeek = function() {
   var onejan = new Date(this.getFullYear(),0,1);
   var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
@@ -29,8 +28,35 @@ function numericToTextMonth(month){
 	return monthArray[ month -1 ];
 }
 
+function calculateMinMaxDateRange(DATA){
+	var oldestDate = new Date();
+	var newestDate = new Date();
+    // First and last day in the dataset
+    DATA.forEach((image) => {
+        const tmpDate = new Date(image.year, (image.month-1), image.day);
+        if(tmpDate < oldestDate){
+			oldestDate = new Date(tmpDate);
+        }
+        if(tmpDate > newestDate){
+			newestDate = new Date(tmpDate);
+        }
+    });
+	oldestDate = formatDate(oldestDate);
+	newestDate = formatDate(newestDate);
+	return [oldestDate, newestDate];
+}
+
+
+
 // Repeatable graph creation, StackedHBAR
 function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel, valueLabel,  widthScale = 1, heightScale = 1){
+
+	// Remove old SVGs
+	const myNode = document.getElementById(divName.substring(1));
+	while(myNode && myNode.firstChild){
+		myNode.removeChild(myNode.lastChild);
+	}
+
     let margin = {top: 30, right: 30, bottom: 70, left: 60},
 	width = (460*widthScale) - margin.left - margin.right,
 	height = (400*heightScale) - margin.top - margin.bottom;
