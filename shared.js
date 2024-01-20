@@ -6,6 +6,13 @@ Date.prototype.getWeek = function() {
   return Math.ceil(dayOfYear/7)
 };
 
+function formatDate(date){
+	const y = date.getFullYear();
+	const m = (date.getMonth()+1).toString().padStart(2,'0');
+	const d = date.getDate().toString().padStart(2,'0');
+	return y + "-" + m + "-" + d;
+}
+
 function transformMapToD3DataArray(theMap) {
     m = [];
     for( const [key, value] of theMap.entries()){

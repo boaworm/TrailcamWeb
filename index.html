@@ -169,7 +169,7 @@ for(var month=1;month<=12;month++){
 		return month == d.month; // Deliberate == to match 3 and 03
 	});
 	cameraArray.forEach( (camera) => {
-		// Count number of images on that camera
+		// Count number of animal observations on each image  on that camera
 		const animalCount = thisMonth.reduce(function (a, d) {
 			if(d.camera == camera){
 				return a + +d.count;
@@ -181,7 +181,6 @@ for(var month=1;month<=12;month++){
 		obj['month'] = numericToTextMonth(month);
 		obj['camera'] = camera;
 		obj['observations'] = animalCount;
-		//console.log("pushing object : ", obj);
 		obsPerMonthStackedCameraObject.push( obj );
 	});
 }
@@ -191,12 +190,10 @@ for( let i = 1; i <= 12; i++ ) {
 	const thisMonth = DATA.filter(function(d){
 		return i == d.month; // deliberate match of 1 == 01 etc
 	});
-	//console.log("Processing month " + i + ", found " + thisMonth.length  + " images");
 
 	const totalObsCount = thisMonth.reduce(function(a, d){
 		return a = a + +d.count;
 	}, 0);
-	//console.log("Processing month " + i + ", found " + totalObsCount + " animals");
 	const obsObject = {
 		month: numericToTextMonth(i),
 		observations: totalObsCount
@@ -244,9 +241,9 @@ for(let hour=0;hour<=23;hour++){
 
 
 // Observations by hour, grouped by month (12 graphs coming...)
-for( let theMonth = 1; theMonth<= 12; theMonth++ ){
+for(let theMonth = 1; theMonth<= 12; theMonth++){
 	let mhObs = [];
-	for( let theHour = 0; theHour <= 23; theHour++){
+	for(let theHour = 0; theHour <= 23; theHour++){
 		const thisHour = DATA.filter(function(d){
 			return theHour == d.hour && theMonth == d.month;
 		});
@@ -265,11 +262,7 @@ for( let theMonth = 1; theMonth<= 12; theMonth++ ){
 
 // Animals per day, from start to today
 let dayIndex = new Date(oldestDate);
-//console.log("animal: dayIndex = " , dayIndex);
-//console.log("animal: newestDate = ", newestDate);
-//console.log("animal: oldestDate = ", oldestDate);
 while( dayIndex <= newestDate ){
-	// console.log("Processing date: " + dayIndex);
 	// Grab observations for this day
 	const thisDayObj = DATA.filter(function(d){
 		return d.year == dayIndex.getFullYear() &&
@@ -280,13 +273,8 @@ while( dayIndex <= newestDate ){
 		return a = a + +d.count;
 	},0);
 	
-	const obs = { };
-
-	const y = dayIndex.getFullYear();
-	const m = (dayIndex.getMonth()+1).toString().padStart(2,'0');
-	const d = dayIndex.getDate().toString().padStart(2,'0');
-
-	obs["day"] = y + "-" + m + "-" + d;
+	const obs = {};
+	obs["day"] = formatDate(dayIndex); 
 	obs["observations"] = totalObsCount; 
 	dayByDayObsObject.push( obs );
 
@@ -351,18 +339,10 @@ for(let week=1; week <= 52; week++){
 
 
 
-//// Deer bbs by week - stacked by camera
-
-
+//// Deer obs by week - stacked by camera
 
 dayIndex = new Date(oldestDate);
-/*
-console.log("deer: dayIndex = " , dayIndex);
-console.log("deer: newestDate = ", newestDate);
-console.log("deer: oldestDate = ", oldestDate);
-*/
 while( dayIndex <= newestDate ){
-	// console.log("Processing date: " + dayIndex);
 	// Grab observations for this day
 	const thisDayObj = DATA.filter(function(d){
 		return d.year == dayIndex.getFullYear() &&
@@ -372,13 +352,8 @@ while( dayIndex <= newestDate ){
 	});
 
 	const obs = { };
-	const y = dayIndex.getFullYear();
-	const m = (dayIndex.getMonth()+1).toString().padStart(2,'0');
-	const d = dayIndex.getDate().toString().padStart(2,'0');
-
-	obs["day"] = y + "-" + m + "-" + d;
+	obs["day"] = formatDate(dayIndex); 
 	obs["observations"] = thisDayObj.length;
-	// console.log("day" , obs["day"] , " has ", thisDayObj.length, " deer");
 	dayByDayDeerObsObject.push( obs );
 
 	//// next day, next loop
@@ -386,56 +361,30 @@ while( dayIndex <= newestDate ){
 }
 
 
-// Animal obs per camera - pending building
-
-// Top Camera, obs per hour
-// Observations by hour - Top Camera (irrespective of month, year)
-for( let i = 0; i<= 23; i++){
-	const thisHour = DATA.filter(function(d){
-		return i == d.hour &&  
-			d.camera==="TOP"; // delibreate match of 4 == 04 etc
-	});
-	const totalObsCount = thisHour.reduce(function(a, d){
-		return a = a + +d.count;
-	}, 0);
-	const obsObject = {
-		hour: i,
-		observations: totalObsCount
-	};
-	obsPerHourTopCameraObject.push( obsObject );
-}
-// Observations by hour - Middle Camera (irrespective of month, year)
-for( let i = 0; i<= 23; i++){
-	const thisHour = DATA.filter(function(d){
-		return i == d.hour &&  
-			d.camera==="MIDDLE"; // delibreate match of 4 == 04 etc
-	});
-	const totalObsCount = thisHour.reduce(function(a, d){
-		return a = a + +d.count;
-	}, 0);
-	const obsObject = {
-		hour: i,
-		observations: totalObsCount
-	};
-	obsPerHourMiddleCameraObject.push( obsObject );
-}
-// Observations by hour - House Camera (irrespective of month, year)
-for( let i = 0; i<= 23; i++){
-	const thisHour = DATA.filter(function(d){
-		return i == d.hour &&  
-			d.camera==="HOUSE"; // delibreate match of 4 == 04 etc
-	});
-	const totalObsCount = thisHour.reduce(function(a, d){
-		return a = a + +d.count;
-	}, 0);
-	const obsObject = {
-		hour: i,
-		observations: totalObsCount
-	};
 
 
-	obsPerHourHouseCameraObject.push( obsObject );
+// Observations by hour - (irrespective of month, year)
+function getObsPerHour(cameraName, arr){
+	for( let i = 0; i<= 23; i++){
+		const thisHour = DATA.filter(function(d){
+			return i == d.hour && // deliberate match of 4 == 04 etc 
+				d.camera===cameraName;
+		});
+		const totalObsCount = thisHour.reduce(function(a, d){
+			return a = a + +d.count;
+		}, 0);
+		const obsObject = {
+			hour: i,
+			observations: totalObsCount
+		};
+		arr.push( obsObject );
+	}
+	return arr;
 }
+
+getObsPerHour("TOP", obsPerHourTopCameraObject);
+getObsPerHour("MIDDLE", obsPerHourMiddleCameraObject);
+getObsPerHour("HOUSE", obsPerHourHouseCameraObject);
 
 //// Deer obs per hour, per camera
 
@@ -446,51 +395,24 @@ let allDeerImages = DATA.filter(function(d){
 	imagesWithDeerMap.has(d.image);
 });
 
-let subset = allDeerImages.filter(function(d){
-	return d.camera==="TOP";
-});
-for(let i = 0; i<= 23; i++){
-	const obsCount = subset.reduce(function(a, d){
-		return a = a + +(i == d.hour);
-	}, 0);
-	const obsObject = {
-		hour: i,
-		observations: obsCount
-	};
-	deerObsPerHourTopCameraObject.push( obsObject );
-}
-
-// Deer Observations by hour - Middle Camera (irrespective of month, year)
-subset = allDeerImages.filter(function(d){
-	return d.camera==="MIDDLE";
-});
-for(let i = 0; i<= 23; i++){
-	const obsCount = subset.reduce(function(a, d){
-		return a = a + +(i == d.hour);
-	}, 0);
-	const obsObject = {
-		hour: i,
-		observations: obsCount
-	};
-	deerObsPerHourMiddleCameraObject.push( obsObject );
-}
-
-
-// Deer Observations by hour - House Camera (irrespective of month, year)
-subset = allDeerImages.filter(function(d){
-	return d.camera==="HOUSE"
-});
-for(let i = 0; i<= 23; i++){
-	const thisHour = subset.filter(function(d){
-		return i == d.hour;   // delibreate match of 4 == 04 etc
+function getDeerObsPerHour(cameraName, arr){
+	let subset = allDeerImages.filter(function(d){
+		return d.camera===cameraName;
 	});
-	const obsObject = {
-		hour: i,
-		observations: thisHour.length
-	};
-	deerObsPerHourHouseCameraObject.push(obsObject);
+	for(let i = 0; i<= 23; i++){
+		const obsCount = subset.reduce(function(a, d){
+			return a = a + +(i == d.hour);
+		}, 0);
+		const obsObject = {
+			hour: i,
+			observations: obsCount
+		};
+		arr.push( obsObject );
+	}
 }
-
+getDeerObsPerHour("TOP", deerObsPerHourTopCameraObject);
+getDeerObsPerHour("MIDDLE", deerObsPerHourMiddleCameraObject);
+getDeerObsPerHour("HOUSE", deerObsPerHourHouseCameraObject);
 
 // #### Start rendering data into graphs ####
 
