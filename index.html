@@ -10,9 +10,9 @@
 	<script src="oklahoma_observations.json.js"></script>
 	<script src="deer_observations.json.js"></script>
 	<!--
-	<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-	-->
 	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	-->
+	<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 
     <script>
         APP = Vue.createApp({
@@ -403,14 +403,16 @@ function renderGraphs(){
 
 	//// Deer obs by week - stacked by camera
 
-	dayIndex = new Date(oldestDate);
+	//dayIndex = new Date(oldestDate);
+	dayIndex = new Date(dateRangeFrom);
 	while( dayIndex <= newestDate ){
 		// Grab observations for this day
 		const thisDayObj = DATA.filter(function(d){
 			return d.year == dayIndex.getFullYear() &&
 				d.month == (dayIndex.getMonth()+1) && 
 				d.day == dayIndex.getDate() &&
-				imagesWithDeerMap.has(d.image);
+				imagesWithDeerMap.has(d.image) &&
+				isDateInRange(d.year,d.month,d.day);
 		});
 
 		const obs = { };
@@ -430,7 +432,8 @@ function renderGraphs(){
 		for( let i = 0; i<= 23; i++){
 			const thisHour = DATA.filter(function(d){
 				return i == d.hour && // deliberate match of 4 == 04 etc 
-					d.camera===cameraName;
+					d.camera===cameraName && 
+					isDateInRange(d.year,d.month,d.day);
 			});
 			const totalObsCount = thisHour.reduce(function(a, d){
 				return a = a + +d.count;
@@ -459,7 +462,8 @@ function renderGraphs(){
 
 	function getDeerObsPerHour(cameraName, arr){
 		let subset = allDeerImages.filter(function(d){
-			return d.camera===cameraName;
+			return d.camera===cameraName &&
+			isDateInRange(d.year,d.month,d.day);
 		});
 		for(let i = 0; i<= 23; i++){
 			const obsCount = subset.reduce(function(a, d){
