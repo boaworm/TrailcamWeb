@@ -7,28 +7,27 @@
 
 	<script src="d3.v7.js"></script>
 	<script src="shared.js"></script>
-	<script src="oklahoma_observations.js"></script>
+	<script src="oklahoma_observations.json.js"></script>
 	<script src="deer_observations.json.js"></script>
 	<!--
-	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-	-->
 	<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+	-->
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <script>
         APP = Vue.createApp({
             props: {},
             data: function() {
                 return {
-					minDate : "2023-01-01",
-					maxDate : "2050-01-01",
-					oldestDateAllowed : "2023-10-01",
-					newestDateAllowed : "2024-02-02"
+					minDateStr : "2023-01-01",
+					maxDateStr : "2050-01-01",
                 };
             },
             methods: {
                 dateRangeUpdated : function(){
-					console.log("refresh!");
-                    renderGraphs(this.minDate, this.maxDate);
+					dateRangeFrom = new Date(this.minDateStr);
+					dateRangeTo = new Date(this.maxDateStr);
+                    renderGraphs();
                 }
             },
             computed: {
@@ -47,12 +46,15 @@
             },
             mounted: function() {
 				const arr = calculateMinMaxDateRange(DATA);
-				this.oldestDateAllowed = arr[0];
-				this.newestDateAllowed = arr[1];
-				// set defaults:
-				this.minDate = this.oldestDateAllowed;
-				this.maxDate = this.newestDateAllowed;
-				renderGraphs(this.minDate, this.maxDate);
+				this.minDateStr = arr[0];
+				this.maxDateStr = arr[1];
+
+				// set JS Globals
+				dateRangeFrom = new Date(this.minDateStr);
+				dateRangeTo = new Date(this.maxDateStr);
+
+				// initial render
+				renderGraphs();
             }
         });
     </script>
@@ -61,20 +63,13 @@
 
 <body>
 <div id="cameraApp">
-
-	Min date = {{ minDate }}<br>
-	Max date = {{ maxDate }}<br>
-	Oldest allowed = {{ oldestDateAllowed }}<br>
-	Newest allowed = {{ newestDateAllowed }}<br>
+	Min date = {{ minDateStr }}<br>
+	Max date = {{ maxDateStr }}<br>
 	<table>
 		<tr>
 			<td>From: 
-				<input :min="new Date(oldestDateAllowed)"
-						:max="new Date(newestDateAllowed)"
-						@change="dateRangeUpdated()" type="date" v-model="minDate"> to 
-				<input :min="new Date(oldestDateAllowed)"
-					:max="new Date(newestDateAllowed)"
-					   @change="dateRangeUpdated()" type="date" v-model="maxDate"></td>
+				<input @change="dateRangeUpdated()" type="date" v-model="minDateStr"> to 
+				<input @change="dateRangeUpdated()" type="date" v-model="maxDateStr"></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -141,23 +136,27 @@
 <script>
 
 ///////// BEGIN MAIN DATA PROCESSING ////////////
-// Extract what years the code is active:
 
 let oldestDate = new Date();
 let newestDate = new Date();
-
+const arr = calculateMinMaxDateRange(DATA);
+oldestDate = arr[0];
+newestDate = arr[1];
 
 function renderGraphs(){
 
+	// Extract what years the code is active:
 	const yearArray = DATA.reduce(function (a, d) {
 		if (a.indexOf(d.year) === -1) {
-		 a.push(d.year);
-	   }
+			a.push(d.year);
+		}
 		return a;
 	}, []);
 	yearArray.sort();
 
 	// GLOBALS
+	var dateRangeFrom = new Date();
+	var dateRangeTo = new Date();
 
 	const yearObsObject = [];
 	const monthObsObject = [];
@@ -185,7 +184,7 @@ function renderGraphs(){
 	// Total obs per year
 	for( let i = 0; i < yearArray.length; i++ ) {
 		const thisYear = DATA.filter(function(d){
-			return yearArray[i] === d.year;
+			return yearArray[i] === d.year && isDateInRange(d.year,d.month,d.day);
 		});
 		const totalCount = thisYear.reduce(function (a, d) {
 			return a = a + +d.count;
@@ -202,7 +201,7 @@ function renderGraphs(){
 	// Total obs per year - stacked by camera : obsPerYearStackedCameraObject
 	yearArray.forEach( (year) => {
 		const thisYear = DATA.filter(function(d){
-			return year === d.year;
+			return year === d.year && isDateInRange(d.year,d.month,d.day);
 		});
 		cameraArray.forEach( (camera) => {
 			// Count number of images on that camera
@@ -224,7 +223,8 @@ function renderGraphs(){
 	// total obs per month - stacked by camera : obsPerMonthStackedCameraObject
 	for(var month=1;month<=12;month++){
 		const thisMonth = DATA.filter(function(d){
-			return month == d.month; // Deliberate == to match 3 and 03
+			return month == d.month && // Deliberate == to match 3 and 03
+				isDateInRange(d.year,d.month,d.day);
 		});
 		cameraArray.forEach( (camera) => {
 			// Count number of animal observations on each image  on that camera
@@ -246,7 +246,8 @@ function renderGraphs(){
 	// Observations by month (irrespective of year)
 	for( let i = 1; i <= 12; i++ ) {
 		const thisMonth = DATA.filter(function(d){
-			return i == d.month; // deliberate match of 1 == 01 etc
+			return i == d.month && // deliberate match of 1 == 01 etc
+				isDateInRange(d.year,d.month,d.day);
 		});
 
 		const totalObsCount = thisMonth.reduce(function(a, d){
@@ -262,7 +263,8 @@ function renderGraphs(){
 	// Observations by hour (irrespective of month, year)
 	for(let i = 0; i<= 23; i++){
 		const thisHour = DATA.filter(function(d){
-			return i == d.hour; // delibreate match of 4 == 04 etc
+			return i == d.hour && // delibreate match of 4 == 04 etc
+				isDateInRange(d.year,d.month,d.day);
 		});
 		const totalObsCount = thisHour.reduce(function(a, d){
 			return a = a + +d.count;
@@ -277,7 +279,8 @@ function renderGraphs(){
 	// Observations by hour - stacked by camera
 	for(let hour=0;hour<=23;hour++){
 		const thisHour = DATA.filter(function(d){
-			return hour == d.hour; // Deliberate == to match 3 and 03
+			return hour == d.hour && // Deliberate == to match 3 and 03
+				isDateInRange(d.year,d.month,d.day);
 		});
 		cameraArray.forEach( (camera) => {
 			// Count number of animal observations on that camera
@@ -303,7 +306,8 @@ function renderGraphs(){
 		let mhObs = [];
 		for(let theHour = 0; theHour <= 23; theHour++){
 			const thisHour = DATA.filter(function(d){
-				return theHour == d.hour && theMonth == d.month;
+				return theHour == d.hour && theMonth == d.month &&
+					isDateInRange(d.year,d.month,d.day);
 			});
 
 			const totalObsCount = thisHour.reduce(function(a, d){
@@ -320,6 +324,10 @@ function renderGraphs(){
 
 	// Animals per day, from start to today
 	let dayIndex = new Date(oldestDate);
+	console.log("run from ", formatDate(dayIndex));
+	if(dayIndex < dateRangeFrom){
+		dayIndex = new Date(dateRangeFrom);
+	}
 	while( dayIndex <= newestDate ){
 		// Grab observations for this day
 		const thisDayObj = DATA.filter(function(d){

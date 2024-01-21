@@ -12,6 +12,17 @@ function formatDate(date){
 	return y + "-" + m + "-" + d;
 }
 
+function isDateInRange(y,m,d){
+	const str = y + "-" + m.padStart(2,'0') + "-" + d.padStart(2,'0');
+ 	const tmpDate = new Date(str);
+    var ret = (tmpDate >= dateRangeFrom && tmpDate <= dateRangeTo);
+	/*
+	console.log("[", ret, "] checking if ", formatDate(tmpDate), " is within ",
+		formatDate(dateRangeMin), " and ", formatDate(dateRangeMax));
+		*/
+	return ret;
+ }
+
 function transformMapToD3DataArray(theMap) {
     m = [];
     for( const [key, value] of theMap.entries()){
@@ -29,21 +40,21 @@ function numericToTextMonth(month){
 }
 
 function calculateMinMaxDateRange(DATA){
-	var oldestDate = new Date();
-	var newestDate = new Date();
+	var oD = new Date();
+	var nD = new Date();
     // First and last day in the dataset
     DATA.forEach((image) => {
         const tmpDate = new Date(image.year, (image.month-1), image.day);
-        if(tmpDate < oldestDate){
-			oldestDate = new Date(tmpDate);
+        if(tmpDate < oD){
+			oD = new Date(tmpDate);
         }
-        if(tmpDate > newestDate){
-			newestDate = new Date(tmpDate);
+        if(tmpDate > nD){
+			nD = new Date(tmpDate);
         }
     });
-	oldestDate = formatDate(oldestDate);
-	newestDate = formatDate(newestDate);
-	return [oldestDate, newestDate];
+	oD = formatDate(oD);
+	nD = formatDate(nD);
+	return [oD, nD];
 }
 
 
