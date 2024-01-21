@@ -31,6 +31,7 @@
                 }
             },
             computed: {
+				/*
                 q1 : function(){
                     return ["obsPerHourJanuary","obsPerHourFebruary","obsPerHourMarch"];
                 },
@@ -43,11 +44,12 @@
                 q4 : function(){
                     return ["obsPerHourOctober","obsPerHourNovember","obsPerHourDecember"];
                 }
+				*/
             },
             mounted: function() {
 				const arr = calculateMinMaxDateRange(DATA);
-				this.minDateStr = arr[0];
-				this.maxDateStr = arr[1];
+				this.minDateStr = formatDate(arr[0]);
+				this.maxDateStr = formatDate(arr[1]);
 
 				// set JS Globals
 				dateRangeFrom = new Date(this.minDateStr);
@@ -63,8 +65,6 @@
 
 <body>
 <div id="cameraApp">
-	Min date = {{ minDateStr }}<br>
-	Max date = {{ maxDateStr }}<br>
 	<table>
 		<tr>
 			<td>From: 
@@ -155,9 +155,6 @@ function renderGraphs(){
 	yearArray.sort();
 
 	// GLOBALS
-	var dateRangeFrom = new Date();
-	var dateRangeTo = new Date();
-
 	const yearObsObject = [];
 	const monthObsObject = [];
 	const hourObsObject = [];
@@ -324,7 +321,6 @@ function renderGraphs(){
 
 	// Animals per day, from start to today
 	let dayIndex = new Date(oldestDate);
-	console.log("run from ", formatDate(dayIndex));
 	if(dayIndex < dateRangeFrom){
 		dayIndex = new Date(dateRangeFrom);
 	}

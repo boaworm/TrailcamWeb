@@ -6,10 +6,17 @@ Date.prototype.getWeek = function() {
 };
 
 function formatDate(date){
-	const y = date.getFullYear();
-	const m = (date.getMonth()+1).toString().padStart(2,'0');
-	const d = date.getDate().toString().padStart(2,'0');
-	return y + "-" + m + "-" + d;
+	try {
+		const y = date.getFullYear();
+		const m = (date.getMonth()+1).toString().padStart(2,'0');
+		const d = date.getDate().toString().padStart(2,'0');
+		return y + "-" + m + "-" + d;
+	} catch (error){
+		console.log("ERROR: invoking dateFormat(...) with NULL");
+		console.log("date object = ", date);
+		console.log("ERROR = ", error);
+	}
+	return "2000-01-01";
 }
 
 function isDateInRange(y,m,d){
@@ -52,8 +59,6 @@ function calculateMinMaxDateRange(DATA){
 			nD = new Date(tmpDate);
         }
     });
-	oD = formatDate(oD);
-	nD = formatDate(nD);
 	return [oD, nD];
 }
 
@@ -191,7 +196,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 }
 
 // Repeatable graph creation, HBAR
-function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthScale = 1, heightScale = 1){
+function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthScale = 1, heightScale = 1) {
 	// Remove old SVGs
 	const myNode = document.getElementById(divName.substring(1));
 	while(myNode && myNode.firstChild){
