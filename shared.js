@@ -142,7 +142,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 
 	var stackedData = d3.stack()
 		.keys(d3.union(dataObject.map(d => d[groupLabel])))
-		.value(([,group], key) => group.get(key).observations)
+		.value(([,group], key) => group.get(key)[valueLabel])
 		(d3.index(dataObject, d => d[barLabel], d => d[groupLabel]));
 
 	// Show the bars
