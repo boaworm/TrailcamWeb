@@ -78,11 +78,13 @@
 			<td></td>
 			<td></td>
 		</tr>
+		<!--
 		<tr>
 			<td><div id="obsPerYear"></div></td>
 			<td><div class="divTableCell" id="obsPerMonth"></div></td>
 			<td><div class="divTableCell" id="obsPerHour"></div></td>
 		</tr>
+		-->
 		<tr>
 		<td><div id="obsPerYearStackedCamera"></div></td>
 		<td><div id="obsPerMonthStackedCamera"></div></td>
@@ -155,9 +157,11 @@ function renderGraphs(){
 	yearArray.sort();
 
 	// GLOBALS
+	/*
 	const yearObsObject = [];
 	const monthObsObject = [];
 	const hourObsObject = [];
+	*/
 
 	const obsPerYearStackedCameraObject = [];
 	const obsPerMonthStackedCameraObject = [];
@@ -179,6 +183,7 @@ function renderGraphs(){
 	const deerObsPerHourHouseCameraObject = [];
 
 	// Total obs per year
+	/*
 	for( let i = 0; i < yearArray.length; i++ ) {
 		const thisYear = DATA.filter(function(d){
 			return yearArray[i] === d.year && isDateInRange(d.year,d.month,d.day);
@@ -193,6 +198,7 @@ function renderGraphs(){
 		};
 		yearObsObject.push( obsObject );
 	}
+	*/
 
 
 	// Total obs per year - stacked by camera : obsPerYearStackedCameraObject
@@ -241,6 +247,7 @@ function renderGraphs(){
 	}
 
 	// Observations by month (irrespective of year)
+	/*
 	for( let i = 1; i <= 12; i++ ) {
 		const thisMonth = DATA.filter(function(d){
 			return i == d.month && // deliberate match of 1 == 01 etc
@@ -256,8 +263,10 @@ function renderGraphs(){
 		};
 		monthObsObject.push( obsObject );
 	}
+	*/
 
 	// Observations by hour (irrespective of month, year)
+	/*
 	for(let i = 0; i<= 23; i++){
 		const thisHour = DATA.filter(function(d){
 			return i == d.hour && // delibreate match of 4 == 04 etc
@@ -272,6 +281,7 @@ function renderGraphs(){
 		};
 		hourObsObject.push( obsObject );
 	}
+	*/
 
 	// Observations by hour - stacked by camera
 	for(let hour=0;hour<=23;hour++){
@@ -483,9 +493,11 @@ function renderGraphs(){
 	// #### Start rendering data into graphs ####
 
 	// Generate yearly observations
+	/*
 	createHBarGraph("#obsPerYear", "Yearly animal observations across all cameras", yearObsObject, "year", "observations");
 	createHBarGraph("#obsPerMonth", "Total animal observations across all cameras, per month", monthObsObject, "month", "observations");
 	createHBarGraph("#obsPerHour", "Total animal observations across all cameras, per hour", hourObsObject, "hour", "observations");
+	 */
 
 	createStackedHBarGraph("#obsPerYearStackedCamera", "Yearly observations - by camera", obsPerYearStackedCameraObject, "year", "camera", "observations");
 	createStackedHBarGraph("#obsPerMonthStackedCamera", "Monthly observations - by camera", obsPerMonthStackedCameraObject, "month", "camera", "observations");
