@@ -6,15 +6,19 @@ MANUALLY_SORTED_CATEGORIES=
     },
     {
         "category": "5.Dog",
-        "count": 48
+        "count": 52
     },
     {
         "category": "9.Armadillo",
         "count": 2
     },
     {
+        "category": "Done_processing",
+        "count": 2
+    },
+    {
         "category": "0.Empty",
-        "count": 395
+        "count": 411
     },
     {
         "category": "6.Bird",
@@ -26,7 +30,7 @@ MANUALLY_SORTED_CATEGORIES=
     },
     {
         "category": "4.Squirrel",
-        "count": 48
+        "count": 50
     },
     {
         "category": "2.Racoon",
@@ -34,10 +38,10 @@ MANUALLY_SORTED_CATEGORIES=
     },
     {
         "category": "3.Rabbit",
-        "count": 206
+        "count": 234
     },
     {
         "category": "1.Deer",
-        "count": 1630
+        "count": 1706
     }
 ]
