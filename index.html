@@ -9,6 +9,7 @@
 	<script src="shared.js"></script>
 	<script src="oklahoma_observations.json.js"></script>
 	<script src="deer_observations.json.js"></script>
+	<script src="manually_classified.json.js"></script>
 	<!--
 	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 	-->
@@ -123,6 +124,12 @@
 		</tr>
 
 		<tr>
+			<td><div id="mlAccuracyAppleStandalone"></div></td>
+			<td><div id="x"></div></td>
+			<td><div id="y"></div></td>
+		</tr>
+
+		<tr>
 		<td><a href="camera.html"><div class="graphLink" id="obsPerHourTopCamera"></div></a></td>
 		<td><a href="camera.html"><div class="graphLink" id="obsPerHourMiddleCamera"></div></a></td>
 		<td><a href="camera.html"><div class="graphLink" id="obsPerHourHouseCamera"></div></a></td>
@@ -182,6 +189,7 @@ function renderGraphs(){
 	const deerObsPerHourMiddleCameraObject = [];
 	const deerObsPerHourHouseCameraObject = [];
 
+	const mlAccuracyAppleStandaloneObject = [];
 	// Total obs per year
 	/*
 	for( let i = 0; i < yearArray.length; i++ ) {
@@ -490,6 +498,57 @@ function renderGraphs(){
 	getDeerObsPerHour("MIDDLE", deerObsPerHourMiddleCameraObject);
 	getDeerObsPerHour("HOUSE", deerObsPerHourHouseCameraObject);
 
+	// Calculate ML accuracy graphs 
+	var truePositive = 0;
+	var trueNegative = 0;
+	var falsePositive = 0;
+	var falseNegative = 0;
+
+	DEER_OBS_DATA.forEach( (deerObs) => {
+		const deerImageName = deerObs.image;
+		var matchingElement = null;
+		for(var manualIndex = 0; manualIndex < MANUALLY_CLASSIFIED.length; manualIndex++){
+			const manualImageName = MANUALLY_CLASSIFIED[manualIndex].image;
+			if(deerImageName == manualImageName){
+				matchingElement = MANUALLY_CLASSIFIED[manualIndex];
+				break;
+			}
+
+		}
+		if(matchingElement == null){
+			// Ignore 
+		}else{
+			const mlClass = deerObs.classification;
+			const humanClass = matchingElement.classification;
+			if("1.Deer" == mlClass){
+				if("1.Deer" == humanClass){
+					truePositive = 1 + truePositive;
+				}else{
+					falsePositive = 1 + falsePositive;
+				}
+			}else{
+				if("1.Deer" == humanClass){
+					falseNegative = 1 + falseNegative;
+				}else{
+					trueNegative = 1 + trueNegative;
+				}
+			}
+		}
+		
+	});
+	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"TruePositive","count":truePositive} );
+	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"TrueNegative","count":trueNegative} );
+	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"FalsePositive","count":0} );
+	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"FalseNegative","count":0} );
+
+	mlAccuracyAppleStandaloneObject.push( {"correctness":"Incorrect","group":"TruePositive","count":0} );
+	mlAccuracyAppleStandaloneObject.push( {"correctness":"Incorrect","group":"TrueNegative","count":0} );
+	mlAccuracyAppleStandaloneObject.push( {"correctness":"Incorrect","group":"FalsePositive","count":falsePositive} );
+	mlAccuracyAppleStandaloneObject.push( {"correctness":"Incorrect","group":"FalseNegative","count":falseNegative} );
+
+	const mlAccuracyAppleStandaloneTitle = "ML Accuracy - Apple Create ML standalone (" + 
+		Math.round(100*(truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative)) + "%)";
+
 	// #### Start rendering data into graphs ####
 
 	// Generate yearly observations
@@ -509,6 +568,8 @@ function renderGraphs(){
 		createHBarGraph(myDiv, "Anmals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "observations");
 	}
 
+	// ML Accuracy graphs
+	createStackedHBarGraph("#mlAccuracyAppleStandalone", mlAccuracyAppleStandaloneTitle, mlAccuracyAppleStandaloneObject, "correctness", "group", "count");
 
 	createHBarGraph("#dayByDayObs", "Total animal observations per day", dayByDayObsObject, "day", "observations", 3, 1);
 	var title = "Total deer observations per day (with " + (100*deerConfidenceThreshold) + "% confidence)";
