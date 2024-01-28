@@ -125,7 +125,7 @@
 
 		<tr>
 			<td><div id="mlAccuracyAppleStandalone"></div></td>
-			<td><div id="x"></div></td>
+			<td><div id="mlAccuracyApplePlusPytorch"></div></td>
 			<td><div id="y"></div></td>
 		</tr>
 
@@ -190,6 +190,7 @@ function renderGraphs(){
 	const deerObsPerHourHouseCameraObject = [];
 
 	const mlAccuracyAppleStandaloneObject = [];
+	const mlAccuracyApplePlusPytorchObject = [];
 	// Total obs per year
 	/*
 	for( let i = 0; i < yearArray.length; i++ ) {
@@ -549,6 +550,85 @@ function renderGraphs(){
 	const mlAccuracyAppleStandaloneTitle = "ML Accuracy - Apple Create ML standalone (" + 
 		Math.round(100*(truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative)) + "%)";
 
+
+	// Show quality when combining Pytorch and Apple ML
+	truePositive = 0;
+	trueNegative = 0;
+	falsePositive = 0;
+	falseNegative = 0;
+
+
+	DEER_OBS_DATA.forEach( (deerObs) => {
+		const deerImageName = deerObs.image;
+		var matchingElement = null;
+		for(var manualIndex = 0; manualIndex < MANUALLY_CLASSIFIED.length; manualIndex++){
+			const manualImageName = MANUALLY_CLASSIFIED[manualIndex].image;
+			if(deerImageName == manualImageName){
+				matchingElement = MANUALLY_CLASSIFIED[manualIndex];
+				break;
+			}
+
+		}
+		if(matchingElement == null){
+			// Ignore 
+		}else{
+			const mlClass = deerObs.classification;
+			const humanClass = matchingElement.classification;
+
+			// Look up obs count from Yolo+Pytorch
+			const obsCount = DATA.reduce( function(a,animalObs) {
+				if( animalObs.image == deerObs.image ){
+					a = a + +animalObs.count;
+				}
+				return a;
+			}, 0);
+
+			if(obsCount == 0){
+				// No anmals observed by Yolo+Pytorch
+				if(humanClass == "0.Empty"){
+					trueNegative = 1 + trueNegative;
+				}else{
+					falseNegative = 1 + falseNegative;
+				}
+			}else{
+				if("1.Deer" == mlClass){
+					if("1.Deer" == humanClass){
+						truePositive = 1 + truePositive;
+					}else{
+						falsePositive = 1 + falsePositive;
+					}
+				}else{
+					if("1.Deer" == humanClass){
+						falseNegative = 1 + falseNegative;
+					}else{
+						trueNegative = 1 + trueNegative;
+					}
+				}
+
+			}
+		}
+		
+	});
+	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"TruePositive","count":truePositive} );
+	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"TrueNegative","count":trueNegative} );
+	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"FalsePositive","count":0} );
+	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"FalseNegative","count":0} );
+
+	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Incorrect","group":"TruePositive","count":0} );
+	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Incorrect","group":"TrueNegative","count":0} );
+	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Incorrect","group":"FalsePositive","count":falsePositive} );
+	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Incorrect","group":"FalseNegative","count":falseNegative} );
+
+	const mlAccuracyApplePlusPytorchTitle = "ML Accuracy - Yolo, PyTorch and Apple ML combined (" + 
+		Math.round(100*(truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative)) + "%)";
+
+
+
+
+
+
+
+
 	// #### Start rendering data into graphs ####
 
 	// Generate yearly observations
@@ -570,6 +650,7 @@ function renderGraphs(){
 
 	// ML Accuracy graphs
 	createStackedHBarGraph("#mlAccuracyAppleStandalone", mlAccuracyAppleStandaloneTitle, mlAccuracyAppleStandaloneObject, "correctness", "group", "count");
+	createStackedHBarGraph("#mlAccuracyApplePlusPytorch", mlAccuracyApplePlusPytorchTitle, mlAccuracyApplePlusPytorchObject, "correctness", "group", "count");
 
 	createHBarGraph("#dayByDayObs", "Total animal observations per day", dayByDayObsObject, "day", "observations", 3, 1);
 	var title = "Total deer observations per day (with " + (100*deerConfidenceThreshold) + "% confidence)";
