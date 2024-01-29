@@ -1,8 +1,8 @@
 Date.prototype.getWeek = function() {
-  var onejan = new Date(this.getFullYear(),0,1);
-  var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
-  var dayOfYear = ((today - onejan + 86400000)/86400000);
-  return Math.ceil(dayOfYear/7)
+	var onejan = new Date(this.getFullYear(),0,1);
+	var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
+	var dayOfYear = ((today - onejan + 86400000)/86400000);
+	return Math.ceil(dayOfYear/7)
 };
 
 function formatDate(date){
@@ -27,7 +27,7 @@ function isDateInRange(y,m,d){
 }
 
 function transformMapToD3DataArray(theMap) {
-    m = [];
+    var m = [];
     for( const [key, value] of theMap.entries()){
 		const o = {};
 		o["year"] = key;
@@ -107,7 +107,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 
 	//console.log("Max accumulated value for one row is: " , maxPerRow);
 
-     // append the svg object to the body of the page
+    // append the svg object to the body of the page
     let svg = d3.select(divName)
 		.append("svg")
 		.attr("width", width + margin.left + margin.right)
@@ -168,22 +168,24 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		.enter()
 		.append("circle")
 			.attr("cx", function(d,i){ return 30 + i*100;})
-			.attr("cy", function(d,i){ return height+50})
+			.attr("cy", function(d,i){ return height+58})
 			.attr("r", 7)
 			.style("fill", function(d){ return color(d)})
 
+	// Group labels
 	svg.selectAll("mylabels")
 		.data(keys)
 		.enter()
 		.append("text")
 			.attr("x", function(d,i){ return 45 + i*100;})
-			.attr("y", function(d,i){ return height+50;}) 
+			.attr("y", function(d,i){ return height+60;}) 
 			.style("fill", function(d){ return color(d)})
+			.style("font-size", "14px")
 			.text(function(d){ return d})
 			.attr("text-anchor", "left")
 			.style("alignment-baseline", "middle");
 
-
+	// Graph title
     svg.append("text")
 		.attr("x", (width / 2))
 		.attr("y", 0 - (margin.top / 2))
