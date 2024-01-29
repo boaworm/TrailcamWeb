@@ -24,7 +24,7 @@ function isDateInRange(y,m,d){
  	const tmpDate = new Date(str);
     var ret = (tmpDate >= dateRangeFrom && tmpDate <= dateRangeTo);
 	return ret;
- }
+}
 
 function transformMapToD3DataArray(theMap) {
     m = [];
@@ -89,6 +89,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 			distinctGroupLabels.push(row[groupLabel]);
 		}
 	});
+	distinctGroupLabels.sort();
 	//console.log("distinct group labels: ", distinctGroupLabels);
 
 	let maxPerRow = 0;
@@ -117,8 +118,8 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 
     // Specific to Stacked BHar
 	var color = d3.scaleOrdinal()
-		.domain(distinctBarLabels)
-		.range(d3.schemeSet2);
+		.domain(distinctGroupLabels)
+		.range(d3.schemeSet1);
 
 	// Add X axis
 	var x = d3.scaleBand()
@@ -210,13 +211,13 @@ function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthSca
 	}, 0);
 
     // append the svg object to the body of the page
-    let svg = d3.select(divName)
-      .append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom)
-      .append("g")
-	.attr("transform",
-	      "translate(" + margin.left + "," + margin.top + ")");
+	let svg = d3.select(divName)
+		.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform",
+			  "translate(" + margin.left + "," + margin.top + ")");
 
     // x axis
     let x = d3.scaleBand()
