@@ -280,15 +280,23 @@ function renderGraphs(){
 				d.month == (dayIndex.getMonth()+1) && 
 				d.day == dayIndex.getDate();
 		});
-		const totalObsCount = thisDayObj.reduce(function(a, d){
-			return a = a + +d.count;
-		},0);
-		
-		const obs = {};
-		obs["day"] = formatDate(dayIndex); 
-		obs["observations"] = totalObsCount; 
-		dayByDayObsObject.push( obs );
+		cameraArray.forEach( (camera) => {
 
+			const totalObsCount = thisDayObj.reduce(function(a, d){
+				if(d.camera === camera){
+					return a = a + +d.count;
+				}else{
+					return a;
+				}
+			},0);
+		
+			const obs = {};
+			obs["day"] = formatDate(dayIndex); 
+			obs["camera"] = camera;
+			obs["observations"] = totalObsCount; 
+			dayByDayObsObject.push( obs );
+
+		});
 		// next day, next loop
 		dayIndex.setDate( dayIndex.getDate() +1 );
 	}
@@ -304,7 +312,9 @@ function renderGraphs(){
 	imagesWithDeer.forEach((image) => {
 		imagesWithDeerMap.set( image['image'], image['confidence'] );
 	});
-	// console.log("found ", imagesWithDeer.length, " images with deer in them");
+
+
+
 
 	//// Obs by week - stacked by camera
 	for(let week=1; week <= 52; week++){
@@ -348,11 +358,8 @@ function renderGraphs(){
 
 	}
 
+	//// Deer obs by day - stacked by camera
 
-
-	//// Deer obs by week - stacked by camera
-
-	//dayIndex = new Date(oldestDate);
 	dayIndex = new Date(dateRangeFrom);
 	while( dayIndex <= newestDate ){
 		// Grab observations for this day
@@ -364,10 +371,17 @@ function renderGraphs(){
 				isDateInRange(d.year,d.month,d.day);
 		});
 
-		const obs = { };
-		obs["day"] = formatDate(dayIndex); 
-		obs["observations"] = thisDayObj.length;
-		dayByDayDeerObsObject.push( obs );
+		cameraArray.forEach( (camera) => {
+			const thisCameraObj = thisDayObj.filter(function(d){
+				return(camera == d.camera);
+			});
+
+			const obs = { };
+			obs["day"] = formatDate(dayIndex); 
+			obs["camera"] = camera;
+			obs["observations"] = thisCameraObj.length;
+			dayByDayDeerObsObject.push( obs );
+		});
 
 		//// next day, next loop
 		dayIndex.setDate( dayIndex.getDate() +1 );
@@ -576,9 +590,14 @@ function renderGraphs(){
 	createStackedHBarGraph("#mlAccuracyAppleStandalone", mlAccuracyAppleStandaloneTitle, mlAccuracyAppleStandaloneObject, "correctness", "group", "count");
 	createStackedHBarGraph("#mlAccuracyApplePlusPytorch", mlAccuracyApplePlusPytorchTitle, mlAccuracyApplePlusPytorchObject, "correctness", "group", "count");
 
-	createHBarGraph("#dayByDayObs", "Total animal observations per day", dayByDayObsObject, "day", "observations", 3, 1);
+	// Obs per day - animal - stacked by camera
+	createStackedHBarGraph("#dayByDayObs", "Total animal observations per day", dayByDayObsObject, "day", "camera", "observations", 3, 1);
+	// Obs per day - deer with 85% confidence - stacked by camera
 	var title = "Total deer observations per day (with " + (100*deerConfidenceThreshold) + "% confidence)";
-	createHBarGraph("#dayByDayDeerObs", title, dayByDayDeerObsObject, "day", "observations", 3, 1);
+	createStackedHBarGraph("#dayByDayDeerObs", title, dayByDayDeerObsObject, "day", "camera", "observations", 3, 1);
+
+
+
 
 	createStackedHBarGraph("#weekByWeekObs", "Total animal observations per week", weekByWeekObsObject, "week","camera", "observations", 3, 1);
 	title = "Total deer observations per week (with " + (100*deerConfidenceThreshold) + "% confidence)";
@@ -599,5 +618,6 @@ function renderGraphs(){
 	APP.mount('#cameraApp');
 </script>
 
+</div>
 </body>
 </html>
