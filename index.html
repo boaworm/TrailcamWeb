@@ -79,36 +79,29 @@
 			<td></td>
 			<td></td>
 		</tr>
-		<!--
 		<tr>
-			<td><div id="obsPerYear"></div></td>
-			<td><div class="divTableCell" id="obsPerMonth"></div></td>
-			<td><div class="divTableCell" id="obsPerHour"></div></td>
+			<td><div id="obsPerYearStackedCamera"></div></td>
+			<td><div id="obsPerMonthStackedCamera"></div></td>
+			<td><div id="obsPerHourStackedCamera"></div></td>
 		</tr>
-		-->
-		<tr>
-		<td><div id="obsPerYearStackedCamera"></div></td>
-		<td><div id="obsPerMonthStackedCamera"></div></td>
-		<td><div id="obsPerHourStackedCamera"></div></td>
-		</tr>
-		<td><div id="obsPerHourJanuary"></div></td>
-		<td><div id="obsPerHourFebruary"></div></td>
-		<td><div id="obsPerHourMarch"></div></td>
+			<td><div id="obsPerHourJanuary"></div></td>
+			<td><div id="obsPerHourFebruary"></div></td>
+			<td><div id="obsPerHourMarch"></div></td>
 		</tr>
 		<tr>
-		<td><div id="obsPerHourApril"></div></td>
-		<td><div id="obsPerHourMay"></div></td>
-		<td><div id="obsPerHourJune"></div></td>
+			<td><div id="obsPerHourApril"></div></td>
+			<td><div id="obsPerHourMay"></div></td>
+			<td><div id="obsPerHourJune"></div></td>
 		</tr>
 		<tr>
-		<td><div id="obsPerHourJuly"></div></td>
-		<td><div id="obsPerHourAugust"></div></td>
-		<td><div id="obsPerHourSeptember"></div></td>
+			<td><div id="obsPerHourJuly"></div></td>
+			<td><div id="obsPerHourAugust"></div></td>
+			<td><div id="obsPerHourSeptember"></div></td>
 		</tr>
 		<tr>
-		<td><div id="obsPerHourOctober"></div></td>
-		<td><div id="obsPerHourNovember"></div></td>
-		<td><div id="obsPerHourDecember"></div></td>
+			<td><div id="obsPerHourOctober"></div></td>
+			<td><div id="obsPerHourNovember"></div></td>
+			<td><div id="obsPerHourDecember"></div></td>
 		</tr>
 		<tr>
 			<td colspan="3"><div id="dayByDayObs"></div> </td>
@@ -130,9 +123,9 @@
 		</tr>
 
 		<tr>
-		<td><a href="camera.html"><div class="graphLink" id="obsPerHourTopCamera"></div></a></td>
-		<td><a href="camera.html"><div class="graphLink" id="obsPerHourMiddleCamera"></div></a></td>
-		<td><a href="camera.html"><div class="graphLink" id="obsPerHourHouseCamera"></div></a></td>
+			<td><a href="camera.html"><div class="graphLink" id="obsPerHourTopCamera"></div></a></td>
+			<td><a href="camera.html"><div class="graphLink" id="obsPerHourMiddleCamera"></div></a></td>
+			<td><a href="camera.html"><div class="graphLink" id="obsPerHourHouseCamera"></div></a></td>
 		</tr>
 
 		<tr>
@@ -164,12 +157,6 @@ function renderGraphs(){
 	yearArray.sort();
 
 	// GLOBALS
-	/*
-	const yearObsObject = [];
-	const monthObsObject = [];
-	const hourObsObject = [];
-	*/
-
 	const obsPerYearStackedCameraObject = [];
 	const obsPerMonthStackedCameraObject = [];
 	const obsPerHourStackedCameraObject = [];
