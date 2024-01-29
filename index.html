@@ -191,24 +191,6 @@ function renderGraphs(){
 
 	const mlAccuracyAppleStandaloneObject = [];
 	const mlAccuracyApplePlusPytorchObject = [];
-	// Total obs per year
-	/*
-	for( let i = 0; i < yearArray.length; i++ ) {
-		const thisYear = DATA.filter(function(d){
-			return yearArray[i] === d.year && isDateInRange(d.year,d.month,d.day);
-		});
-		const totalCount = thisYear.reduce(function (a, d) {
-			return a = a + +d.count;
-		}, 0);
-
-		const obsObject = {
-			year: yearArray[i],
-			observations: totalCount
-		};
-		yearObsObject.push( obsObject );
-	}
-	*/
-
 
 	// Total obs per year - stacked by camera : obsPerYearStackedCameraObject
 	yearArray.forEach( (year) => {
@@ -255,43 +237,6 @@ function renderGraphs(){
 		});
 	}
 
-	// Observations by month (irrespective of year)
-	/*
-	for( let i = 1; i <= 12; i++ ) {
-		const thisMonth = DATA.filter(function(d){
-			return i == d.month && // deliberate match of 1 == 01 etc
-				isDateInRange(d.year,d.month,d.day);
-		});
-
-		const totalObsCount = thisMonth.reduce(function(a, d){
-			return a = a + +d.count;
-		}, 0);
-		const obsObject = {
-			month: numericToTextMonth(i),
-			observations: totalObsCount
-		};
-		monthObsObject.push( obsObject );
-	}
-	*/
-
-	// Observations by hour (irrespective of month, year)
-	/*
-	for(let i = 0; i<= 23; i++){
-		const thisHour = DATA.filter(function(d){
-			return i == d.hour && // delibreate match of 4 == 04 etc
-				isDateInRange(d.year,d.month,d.day);
-		});
-		const totalObsCount = thisHour.reduce(function(a, d){
-			return a = a + +d.count;
-		}, 0);
-		const obsObject = {
-			hour: i,
-			observations: totalObsCount
-		};
-		hourObsObject.push( obsObject );
-	}
-	*/
-
 	// Observations by hour - stacked by camera
 	for(let hour=0;hour<=23;hour++){
 		const thisHour = DATA.filter(function(d){
@@ -314,8 +259,6 @@ function renderGraphs(){
 			obsPerHourStackedCameraObject.push( obj );
 		});
 	}
-
-
 
 	// Observations by hour, grouped by month (12 graphs coming...)
 	for(let theMonth = 1; theMonth<= 12; theMonth++){
@@ -632,12 +575,6 @@ function renderGraphs(){
 	// #### Start rendering data into graphs ####
 
 	// Generate yearly observations
-	/*
-	createHBarGraph("#obsPerYear", "Yearly animal observations across all cameras", yearObsObject, "year", "observations");
-	createHBarGraph("#obsPerMonth", "Total animal observations across all cameras, per month", monthObsObject, "month", "observations");
-	createHBarGraph("#obsPerHour", "Total animal observations across all cameras, per hour", hourObsObject, "hour", "observations");
-	 */
-
 	createStackedHBarGraph("#obsPerYearStackedCamera", "Yearly observations - by camera", obsPerYearStackedCameraObject, "year", "camera", "observations");
 	createStackedHBarGraph("#obsPerMonthStackedCamera", "Monthly observations - by camera", obsPerMonthStackedCameraObject, "month", "camera", "observations");
 	createStackedHBarGraph("#obsPerHourStackedCamera", "Hourly observations - by camera", obsPerHourStackedCameraObject, "hour", "camera", "observations");
