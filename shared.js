@@ -26,6 +26,12 @@ function isDateInRange(y,m,d){
 	return ret;
 }
 
+function daysBetweenDates(a,b){
+	let diff = a.getTime() - b.getTime();
+	let diffDays = Math.abs(Math.round(diff/(1000*3600*24)));
+	return diffDays;
+}
+
 function transformMapToD3DataArray(theMap) {
     var m = [];
     for( const [key, value] of theMap.entries()){

@@ -84,6 +84,11 @@
 			<td><div id="obsPerMonthStackedCamera"></div></td>
 			<td><div id="obsPerHourStackedCamera"></div></td>
 		</tr>
+		<tr>
+			<td><div id="x"></div></td>
+			<td><div id=""></div></td>
+			<td><div id="obsPerHourAveragePerDayStackedCamera"></div></td>
+		</tr>
 			<td><div id="obsPerHourJanuary"></div></td>
 			<td><div id="obsPerHourFebruary"></div></td>
 			<td><div id="obsPerHourMarch"></div></td>
@@ -160,6 +165,8 @@ function renderGraphs(){
 	const obsPerYearStackedCameraObject = [];
 	const obsPerMonthStackedCameraObject = [];
 	const obsPerHourStackedCameraObject = [];
+
+	const obsPerHourAveragePerDayStackedCameraObject = [];
 
 	const monthlyHourObsObject = [];
 	const dayByDayObsObject = [];
@@ -246,6 +253,35 @@ function renderGraphs(){
 			obsPerHourStackedCameraObject.push( obj );
 		});
 	}
+
+	// Hourly observations, average per day - stacked by camera
+	const daysInRange = daysBetweenDates(dateRangeFrom, dateRangeTo);
+	// console.log("There are ", daysInRange, " days between ", dateRangeFrom, " and ", dateRangeTo);
+	for(let hour=0;hour<=23;hour++){
+		const thisHour = DATA.filter(function(d){
+			return hour == d.hour && // Deliberate == to match 3 and 03
+				isDateInRange(d.year,d.month,d.day);
+		});
+		// console.log("[",hour,"] there are ", thisHour.length, " hours...");
+		cameraArray.forEach( (camera) => {
+			// Count number of animal observations on that camera
+			const animalCount = thisHour.reduce(function (a, d) {
+				if(d.camera == camera){
+					return a + +d.count;
+				}else{
+					return a;
+				}
+			},0);
+
+			let obj = {};
+			obj['hour'] = hour;
+			obj['camera'] = camera;
+			obj['average'] = animalCount / daysInRange;
+			obsPerHourAveragePerDayStackedCameraObject.push( obj );
+		});
+	}
+
+
 
 	// Observations by hour, grouped by month (12 graphs coming...)
 	for(let theMonth = 1; theMonth<= 12; theMonth++){
@@ -576,14 +612,18 @@ function renderGraphs(){
 	// #### Start rendering data into graphs ####
 
 	// Generate yearly observations
-	createStackedHBarGraph("#obsPerYearStackedCamera", "Yearly observations - by camera", obsPerYearStackedCameraObject, "year", "camera", "observations");
-	createStackedHBarGraph("#obsPerMonthStackedCamera", "Monthly observations - by camera", obsPerMonthStackedCameraObject, "month", "camera", "observations");
-	createStackedHBarGraph("#obsPerHourStackedCamera", "Hourly observations - by camera", obsPerHourStackedCameraObject, "hour", "camera", "observations");
+	createStackedHBarGraph("#obsPerYearStackedCamera", "Cumulative yearly observations - by camera", obsPerYearStackedCameraObject, "year", "camera", "observations");
+	createStackedHBarGraph("#obsPerMonthStackedCamera", "Cumulative monthly observations - by camera", obsPerMonthStackedCameraObject, "month", "camera", "observations");
+	createStackedHBarGraph("#obsPerHourStackedCamera", "Cumulative hourly observations - by camera", obsPerHourStackedCameraObject, "hour", "camera", "observations");
+
+
+
+	createStackedHBarGraph("#obsPerHourAveragePerDayStackedCamera", "Hourly observations, average by day - by camera", obsPerHourAveragePerDayStackedCameraObject, "hour", "camera", "average");
 
 	for(let i=0; i<12; i++){
 		// console.log(monthArray[i]);
 		const myDiv = "#obsPerHour" + monthArray[i];
-		createHBarGraph(myDiv, "Anmals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "observations");
+		createHBarGraph(myDiv, "Animals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "observations");
 	}
 
 	// ML Accuracy graphs
