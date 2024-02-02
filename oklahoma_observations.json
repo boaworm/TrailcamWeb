@@ -12178,6 +12178,106 @@
         ]
     },
     {
+        "date": "2024-01-29",
+        "date_time": "2024-01-29 11:11:00",
+        "year": "2024",
+        "month": "01",
+        "day": "29",
+        "camera": "HOUSE",
+        "hour": "11",
+        "minute": "11",
+        "second": "00",
+        "image": "HOUSE_2024-01-29T111100_PICT1515_202401291800E0C7T.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-29",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-01-29",
+        "date_time": "2024-01-29 19:09:00",
+        "year": "2024",
+        "month": "01",
+        "day": "29",
+        "camera": "MIDDLE",
+        "hour": "19",
+        "minute": "09",
+        "second": "00",
+        "image": "MIDDLE_2024-01-29T190900_PICT1987_2024013003018CAUW.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-29",
+        "count": "2",
+        "confidence": [
+            0.9459052085876465,
+            0.8653476238250732
+        ]
+    },
+    {
+        "date": "2024-01-29",
+        "date_time": "2024-01-29 20:59:00",
+        "year": "2024",
+        "month": "01",
+        "day": "29",
+        "camera": "MIDDLE",
+        "hour": "20",
+        "minute": "59",
+        "second": "00",
+        "image": "MIDDLE_2024-01-29T205900_PICT1988_202401300301L6QUK.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-29",
+        "count": "1",
+        "confidence": [
+            0.8733460307121277
+        ]
+    },
+    {
+        "date": "2024-01-29",
+        "date_time": "2024-01-29 22:02:00",
+        "year": "2024",
+        "month": "01",
+        "day": "29",
+        "camera": "MIDDLE",
+        "hour": "22",
+        "minute": "02",
+        "second": "00",
+        "image": "MIDDLE_2024-01-29T220200_PICT1989_202401300501FBRCP.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-29",
+        "count": "1",
+        "confidence": [
+            0.621296226978302
+        ]
+    },
+    {
+        "date": "2024-01-29",
+        "date_time": "2024-01-29 17:27:00",
+        "year": "2024",
+        "month": "01",
+        "day": "29",
+        "camera": "TOP",
+        "hour": "17",
+        "minute": "27",
+        "second": "00",
+        "image": "TOP_2024-01-29T172700_PICT5893_202401292359XSZME.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-29",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-01-29",
+        "date_time": "2024-01-29 19:36:00",
+        "year": "2024",
+        "month": "01",
+        "day": "29",
+        "camera": "TOP",
+        "hour": "19",
+        "minute": "36",
+        "second": "00",
+        "image": "TOP_2024-01-29T193600_PICT5894_202401300200C7F1I.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-29",
+        "count": "2",
+        "confidence": [
+            0.7055349946022034,
+            0.66057288646698
+        ]
+    },
+    {
         "date": "2023-12-21",
         "date_time": "2023-12-21 01:56:00",
         "year": "2023",
@@ -12836,6 +12936,555 @@
         "count": "1",
         "confidence": [
             0.952869713306427
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 12:11:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "HOUSE",
+        "hour": "12",
+        "minute": "11",
+        "second": "00",
+        "image": "HOUSE_2024-01-30T121100_PICT1516_202401302000G2PHQ.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 21:08:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "HOUSE",
+        "hour": "21",
+        "minute": "08",
+        "second": "00",
+        "image": "HOUSE_2024-01-30T210800_PICT1517_202401310401VVZGW.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 21:28:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "HOUSE",
+        "hour": "21",
+        "minute": "28",
+        "second": "00",
+        "image": "HOUSE_2024-01-30T212800_PICT1518_202401310401RV6TS.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.48626968264579773,
+            0.33775079250335693
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 16:47:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "MIDDLE",
+        "hour": "16",
+        "minute": "47",
+        "second": "00",
+        "image": "MIDDLE_2024-01-30T164700_PICT1992_202401302301LAOIU.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 17:47:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "MIDDLE",
+        "hour": "17",
+        "minute": "47",
+        "second": "00",
+        "image": "MIDDLE_2024-01-30T174700_PICT1993_2024013101016R1CK.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 18:02:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "MIDDLE",
+        "hour": "18",
+        "minute": "02",
+        "second": "00",
+        "image": "MIDDLE_2024-01-30T180200_PICT1994_202401310101USXMD.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 20:11:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "MIDDLE",
+        "hour": "20",
+        "minute": "11",
+        "second": "00",
+        "image": "MIDDLE_2024-01-30T201100_PICT1995_202401310301X8WLG.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "3",
+        "confidence": [
+            0.9243038892745972,
+            0.9145981669425964,
+            0.912112832069397
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 02:01:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "02",
+        "minute": "01",
+        "second": "00",
+        "image": "TOP_2024-01-30T020100_PICT5895_202401301000YR6R9.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.42083168029785156
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 09:57:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "09",
+        "minute": "57",
+        "second": "00",
+        "image": "TOP_2024-01-30T095700_PICT5911_202401301600K7LP9.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9361211061477661
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:02:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "02",
+        "second": "00",
+        "image": "TOP_2024-01-30T100200_PICT5912_202401301800XMXAS.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.7299341559410095
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:05:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "05",
+        "second": "00",
+        "image": "TOP_2024-01-30T100500_PICT5913_202401301800NIKT9.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9522721767425537
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:08:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "08",
+        "second": "00",
+        "image": "TOP_2024-01-30T100800_PICT5914_2024013018007QQCT.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9245190024375916
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:11:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "11",
+        "second": "00",
+        "image": "TOP_2024-01-30T101100_PICT5915_202401301800KIAFQ.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9067445397377014
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:14:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "14",
+        "second": "00",
+        "image": "TOP_2024-01-30T101400_PICT5916_2024013018001PAJV.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9157256484031677
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:18:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "18",
+        "second": "00",
+        "image": "TOP_2024-01-30T101800_PICT5917_202401301800ABUHK.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.93746417760849
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:21:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "21",
+        "second": "00",
+        "image": "TOP_2024-01-30T102100_PICT5918_202401301800G39HW.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9100712537765503
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:24:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "24",
+        "second": "00",
+        "image": "TOP_2024-01-30T102400_PICT5919_202401301800FJIIK.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9024155735969543
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:27:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "27",
+        "second": "00",
+        "image": "TOP_2024-01-30T102700_PICT5920_202401301800CVQWZ.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9269984364509583
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:30:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "30",
+        "second": "00",
+        "image": "TOP_2024-01-30T103000_PICT5921_202401301800SH3DP.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.918525218963623
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 10:48:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "10",
+        "minute": "48",
+        "second": "00",
+        "image": "TOP_2024-01-30T104800_PICT5922_202401301800XDVUR.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.9051401019096375
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 19:56:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "19",
+        "minute": "56",
+        "second": "00",
+        "image": "TOP_2024-01-30T195600_PICT5929_2024013102005FNQL.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.9439293742179871,
+            0.9339032173156738
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 19:59:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "19",
+        "minute": "59",
+        "second": "00",
+        "image": "TOP_2024-01-30T195900_PICT5930_202401310200HQJGO.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.9474439024925232,
+            0.9115570783615112
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 20:03:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "20",
+        "minute": "03",
+        "second": "00",
+        "image": "TOP_2024-01-30T200300_PICT5931_202401310400LTMDX.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.9636600017547607,
+            0.9149715900421143
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 20:06:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "20",
+        "minute": "06",
+        "second": "00",
+        "image": "TOP_2024-01-30T200600_PICT5932_202401310400H2P0O.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "3",
+        "confidence": [
+            0.9466552734375,
+            0.8654357194900513,
+            0.40560564398765564
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 20:09:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "20",
+        "minute": "09",
+        "second": "00",
+        "image": "TOP_2024-01-30T200900_PICT5933_202401310400XKMTP.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.9570150375366211,
+            0.948625922203064
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 20:12:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "20",
+        "minute": "12",
+        "second": "00",
+        "image": "TOP_2024-01-30T201200_PICT5934_202401310400RJDGL.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.9536290168762207,
+            0.9415553212165833
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 20:35:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "20",
+        "minute": "35",
+        "second": "00",
+        "image": "TOP_2024-01-30T203500_PICT5935_202401310400CK6PC.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.9646159410476685,
+            0.9567592144012451
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 21:31:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "21",
+        "minute": "31",
+        "second": "00",
+        "image": "TOP_2024-01-30T213100_PICT5936_202401310400JF3WH.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.4669835865497589,
+            0.2229539304971695
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 21:35:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "21",
+        "minute": "35",
+        "second": "00",
+        "image": "TOP_2024-01-30T213500_PICT5937_202401310400VZ5C8.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.46945226192474365,
+            0.21558505296707153
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 21:45:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "21",
+        "minute": "45",
+        "second": "00",
+        "image": "TOP_2024-01-30T214500_PICT5938_202401310400DYKAC.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.6860324740409851,
+            0.4678349196910858
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 21:49:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "21",
+        "minute": "49",
+        "second": "00",
+        "image": "TOP_2024-01-30T214900_PICT5939_202401310400FAH1B.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "2",
+        "confidence": [
+            0.759182333946228,
+            0.6017439961433411
+        ]
+    },
+    {
+        "date": "2024-01-30",
+        "date_time": "2024-01-30 21:53:00",
+        "year": "2024",
+        "month": "01",
+        "day": "30",
+        "camera": "TOP",
+        "hour": "21",
+        "minute": "53",
+        "second": "00",
+        "image": "TOP_2024-01-30T215300_PICT5940_202401310400103HQ.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-30",
+        "count": "1",
+        "confidence": [
+            0.681450605392456
         ]
     },
     {
@@ -16399,6 +17048,558 @@
         "count": "1",
         "confidence": [
             0.9482777714729309
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 05:33:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "HOUSE",
+        "hour": "05",
+        "minute": "33",
+        "second": "00",
+        "image": "HOUSE_2024-02-01T053300_PICT1522_202402011200JJHUZ.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 09:18:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "HOUSE",
+        "hour": "09",
+        "minute": "18",
+        "second": "00",
+        "image": "HOUSE_2024-02-01T091800_PICT1523_2024020116005WLWK.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.9504095911979675
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 09:18:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "HOUSE",
+        "hour": "09",
+        "minute": "18",
+        "second": "00",
+        "image": "HOUSE_2024-02-01T091800_PICT1524_202402011600AGCVQ.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.9343101978302002
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 09:20:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "HOUSE",
+        "hour": "09",
+        "minute": "20",
+        "second": "00",
+        "image": "HOUSE_2024-02-01T092000_PICT1525_202402011600FBARG.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.9614660739898682
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 14:36:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "HOUSE",
+        "hour": "14",
+        "minute": "36",
+        "second": "00",
+        "image": "HOUSE_2024-02-01T143600_PICT1526_202402012200RAUN8.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.744754433631897
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 14:38:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "HOUSE",
+        "hour": "14",
+        "minute": "38",
+        "second": "00",
+        "image": "HOUSE_2024-02-01T143800_PICT1527_2024020122004C49J.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.7501839995384216
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 14:57:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "HOUSE",
+        "hour": "14",
+        "minute": "57",
+        "second": "00",
+        "image": "HOUSE_2024-02-01T145700_PICT1528_202402012200CXHFL.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 14:30:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "MIDDLE",
+        "hour": "14",
+        "minute": "30",
+        "second": "00",
+        "image": "MIDDLE_2024-02-01T143000_PICT2010_202402012101HDY1M.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 22:09:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "MIDDLE",
+        "hour": "22",
+        "minute": "09",
+        "second": "00",
+        "image": "MIDDLE_2024-02-01T220900_PICT2011_2024020205014Y8DT.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.3408880829811096
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 00:23:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "00",
+        "minute": "23",
+        "second": "00",
+        "image": "TOP_2024-02-01T002300_PICT5981_202402010759STOPU.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.9522660970687866
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 00:27:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "00",
+        "minute": "27",
+        "second": "00",
+        "image": "TOP_2024-02-01T002700_PICT5982_202402010759JB696.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.8940611481666565,
+            0.862507700920105
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 00:33:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "00",
+        "minute": "33",
+        "second": "00",
+        "image": "TOP_2024-02-01T003300_PICT5983_2024020107594ATTW.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.8686080574989319,
+            0.3393681049346924
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 00:44:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "00",
+        "minute": "44",
+        "second": "00",
+        "image": "TOP_2024-02-01T004400_PICT5984_202402010759RRJVA.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9605860114097595,
+            0.30747243762016296
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 00:51:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "00",
+        "minute": "51",
+        "second": "00",
+        "image": "TOP_2024-02-01T005100_PICT5985_202402010759DON0A.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.9652293920516968
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 14:44:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "14",
+        "minute": "44",
+        "second": "00",
+        "image": "TOP_2024-02-01T144400_PICT5994_202402012159HSJJX.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.22501741349697113
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 17:46:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "17",
+        "minute": "46",
+        "second": "00",
+        "image": "TOP_2024-02-01T174600_PICT5998_202402020000396Q7.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "0",
+        "confidence": []
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:07:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "07",
+        "second": "00",
+        "image": "TOP_2024-02-01T180700_PICT5999_202402020200XTW46.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.9524799585342407
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:10:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "10",
+        "second": "00",
+        "image": "TOP_2024-02-01T181000_PICT6000_202402020200Q6GE8.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9610079526901245,
+            0.8667328953742981
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:13:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "13",
+        "second": "00",
+        "image": "TOP_2024-02-01T181300_PICT6001_202402020200AVTWM.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9404534101486206,
+            0.9209676384925842
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:16:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "16",
+        "second": "00",
+        "image": "TOP_2024-02-01T181600_PICT6002_202402020200QUH06.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9609014391899109,
+            0.9487667679786682
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:19:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "19",
+        "second": "00",
+        "image": "TOP_2024-02-01T181900_PICT6003_202402020200LXO4Y.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9345706701278687,
+            0.9312822222709656
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:23:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "23",
+        "second": "00",
+        "image": "TOP_2024-02-01T182300_PICT6004_202402020200LMNEI.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9379968643188477,
+            0.903779149055481
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:26:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "26",
+        "second": "00",
+        "image": "TOP_2024-02-01T182600_PICT6005_202402020200CFWCS.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9467096328735352,
+            0.9249239563941956
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:29:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "29",
+        "second": "00",
+        "image": "TOP_2024-02-01T182900_PICT6006_202402020200GLFFE.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9268643260002136,
+            0.3610008656978607
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:32:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "32",
+        "second": "00",
+        "image": "TOP_2024-02-01T183200_PICT6007_202402020200YNDB1.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9130980968475342,
+            0.3714388906955719
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:40:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "40",
+        "second": "00",
+        "image": "TOP_2024-02-01T184000_PICT6008_202402020200HDXWS.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.8813399076461792,
+            0.5324885249137878
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:44:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "44",
+        "second": "00",
+        "image": "TOP_2024-02-01T184400_PICT6009_202402020200UU3MB.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.9378107190132141,
+            0.5523791909217834
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:49:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "49",
+        "second": "00",
+        "image": "TOP_2024-02-01T184900_PICT6010_202402020200ANT4B.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.917788565158844,
+            0.3930235803127289
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 18:54:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "18",
+        "minute": "54",
+        "second": "00",
+        "image": "TOP_2024-02-01T185400_PICT6011_202402020200SMKZD.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.95897376537323,
+            0.21836119890213013
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 23:12:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "23",
+        "minute": "12",
+        "second": "00",
+        "image": "TOP_2024-02-01T231200_PICT6012_202402020600S13MT.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "2",
+        "confidence": [
+            0.6616696119308472,
+            0.38968855142593384
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 23:27:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "23",
+        "minute": "27",
+        "second": "00",
+        "image": "TOP_2024-02-01T232700_PICT6013_2024020206004PQR9.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.43706586956977844
+        ]
+    },
+    {
+        "date": "2024-02-01",
+        "date_time": "2024-02-01 23:58:00",
+        "year": "2024",
+        "month": "02",
+        "day": "01",
+        "camera": "TOP",
+        "hour": "23",
+        "minute": "58",
+        "second": "00",
+        "image": "TOP_2024-02-01T235800_PICT6014_202402020600XZEJC.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-02-01",
+        "count": "1",
+        "confidence": [
+            0.648407518863678
         ]
     },
     {
@@ -24070,6 +25271,111 @@
         "image_path": "/home/henrik/Wildlife/OklahomaImages/2023-12-27",
         "count": "0",
         "confidence": []
+    },
+    {
+        "date": "2024-01-31",
+        "date_time": "2024-01-31 00:01:00",
+        "year": "2024",
+        "month": "01",
+        "day": "31",
+        "camera": "TOP",
+        "hour": "00",
+        "minute": "01",
+        "second": "00",
+        "image": "TOP_2024-01-31T000100_PICT5941_202401310800ZN8US.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-31",
+        "count": "1",
+        "confidence": [
+            0.5100727081298828
+        ]
+    },
+    {
+        "date": "2024-01-31",
+        "date_time": "2024-01-31 00:39:00",
+        "year": "2024",
+        "month": "01",
+        "day": "31",
+        "camera": "TOP",
+        "hour": "00",
+        "minute": "39",
+        "second": "00",
+        "image": "TOP_2024-01-31T003900_PICT5942_202401310800LPRN9.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-31",
+        "count": "2",
+        "confidence": [
+            0.7766156196594238,
+            0.2309366911649704
+        ]
+    },
+    {
+        "date": "2024-01-31",
+        "date_time": "2024-01-31 00:59:00",
+        "year": "2024",
+        "month": "01",
+        "day": "31",
+        "camera": "TOP",
+        "hour": "00",
+        "minute": "59",
+        "second": "00",
+        "image": "TOP_2024-01-31T005900_PICT5943_202401310800MDS19.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-31",
+        "count": "2",
+        "confidence": [
+            0.8351297378540039,
+            0.4930840730667114
+        ]
+    },
+    {
+        "date": "2024-01-31",
+        "date_time": "2024-01-31 01:35:00",
+        "year": "2024",
+        "month": "01",
+        "day": "31",
+        "camera": "TOP",
+        "hour": "01",
+        "minute": "35",
+        "second": "00",
+        "image": "TOP_2024-01-31T013500_PICT5944_202401310800YLZSC.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-31",
+        "count": "1",
+        "confidence": [
+            0.2796425223350525
+        ]
+    },
+    {
+        "date": "2024-01-31",
+        "date_time": "2024-01-31 01:45:00",
+        "year": "2024",
+        "month": "01",
+        "day": "31",
+        "camera": "TOP",
+        "hour": "01",
+        "minute": "45",
+        "second": "00",
+        "image": "TOP_2024-01-31T014500_PICT5945_202401310800LNIZE.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-31",
+        "count": "2",
+        "confidence": [
+            0.5113239884376526,
+            0.3391861915588379
+        ]
+    },
+    {
+        "date": "2024-01-31",
+        "date_time": "2024-01-31 01:58:00",
+        "year": "2024",
+        "month": "01",
+        "day": "31",
+        "camera": "TOP",
+        "hour": "01",
+        "minute": "58",
+        "second": "00",
+        "image": "TOP_2024-01-31T015800_PICT5946_202401310800MSZP5.JPG",
+        "image_path": "/home/henrik/Wildlife/OklahomaImages/2024-01-31",
+        "count": "1",
+        "confidence": [
+            0.23382668197155
+        ]
     },
     {
         "date": "2024-01-13",
