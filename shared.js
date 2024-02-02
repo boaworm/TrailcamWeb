@@ -32,6 +32,19 @@ function daysBetweenDates(a,b){
 	return diffDays;
 }
 
+function countOfSpecifiedMonthInDateRange(fromDate, toDate, month){
+	var count = 0;
+	var indexDate = new Date(fromDate);
+	indexDate.setDate(1); // reset to first of month to avoid rolling over
+	while( indexDate <= toDate ){
+		if(indexDate.getMonth()+1 == month){
+			count = count + 1;
+		}
+		indexDate = new Date(indexDate.getFullYear(), indexDate.getMonth()+1, 1);
+	}
+	return count;
+}
+
 function transformMapToD3DataArray(theMap) {
     var m = [];
     for( const [key, value] of theMap.entries()){
@@ -68,7 +81,9 @@ function calculateMinMaxDateRange(DATA){
 
 // Repeatable graph creation, StackedHBAR
 function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel, valueLabel,  widthScale = 1, heightScale = 1){
-
+	if(dataObject == null){
+		console.log("ERROR: Invoked createHBarGraph with dataObject null");
+	}
 	// Remove old SVGs
 	const myNode = document.getElementById(divName.substring(1));
 	while(myNode && myNode.firstChild){
@@ -202,6 +217,10 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 
 // Repeatable graph creation, HBAR
 function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthScale = 1, heightScale = 1) {
+	// error flagging
+	if(dataObject == null){
+		console.log("ERROR: Invoked createHBarGraph with dataObject null");
+	}
 	// Remove old SVGs
 	const myNode = document.getElementById(divName.substring(1));
 	while(myNode && myNode.firstChild){

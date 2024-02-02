@@ -86,7 +86,7 @@
 		</tr>
 		<tr>
 			<td><div id="x"></div></td>
-			<td><div id=""></div></td>
+			<td><div id="obsPerMonthAveragePerMonthStackedCamera"></div></td>
 			<td><div id="obsPerHourAveragePerDayStackedCamera"></div></td>
 		</tr>
 			<td><div id="obsPerHourJanuary"></div></td>
@@ -166,6 +166,7 @@ function renderGraphs(){
 	const obsPerMonthStackedCameraObject = [];
 	const obsPerHourStackedCameraObject = [];
 
+	const obsPerMonthAveragePerMonthStackedCameraObject = [];
 	const obsPerHourAveragePerDayStackedCameraObject = [];
 
 	const monthlyHourObsObject = [];
@@ -253,6 +254,34 @@ function renderGraphs(){
 			obsPerHourStackedCameraObject.push( obj );
 		});
 	}
+
+	// Monthly observations, average by month - stacked by camera
+	for(var month=1;month<=12;month++){
+		const thisMonth = DATA.filter(function(d){
+			return month == d.month && // Deliberate == to match 3 and 03
+				isDateInRange(d.year,d.month,d.day);
+		});
+		cameraArray.forEach( (camera) => {
+			// Count number of animal observations on each image  on that camera
+			const animalCount = thisMonth.reduce(function (a, d) {
+				if(d.camera == camera){
+					return a + +d.count;
+				}else{
+					return a;
+				}
+			},0);
+			let obj = {};
+			obj['month'] = numericToTextMonth(month);
+			obj['camera'] = camera;
+			const numberOfThatMonth = countOfSpecifiedMonthInDateRange(dateRangeFrom, dateRangeTo, month);
+			obj['average'] = (numberOfThatMonth === 0 || animalCount === 0) ? 0 : animalCount / numberOfThatMonth;
+			obsPerMonthAveragePerMonthStackedCameraObject.push( obj );
+		});
+	}
+
+
+
+
 
 	// Hourly observations, average per day - stacked by camera
 	const daysInRange = daysBetweenDates(dateRangeFrom, dateRangeTo);
@@ -618,6 +647,7 @@ function renderGraphs(){
 
 
 
+	createStackedHBarGraph("#obsPerMonthAveragePerMonthStackedCamera", "Monthly observations, average by month - by camera", obsPerMonthAveragePerMonthStackedCameraObject, "month", "camera", "average");
 	createStackedHBarGraph("#obsPerHourAveragePerDayStackedCamera", "Hourly observations, average by day - by camera", obsPerHourAveragePerDayStackedCameraObject, "hour", "camera", "average");
 
 	for(let i=0; i<12; i++){
