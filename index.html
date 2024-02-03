@@ -322,7 +322,6 @@ function renderGraphs(){
 			return hour == d.hour && // Deliberate == to match 3 and 03
 				isDateInRange(d.year,d.month,d.day);
 		});
-		// console.log("[",hour,"] there are ", thisHour.length, " hours...");
 		cameraArray.forEach( (camera) => {
 			// Count number of animal observations on that camera
 			const animalCount = thisHour.reduce(function (a, d) {
@@ -352,14 +351,17 @@ function renderGraphs(){
 					isDateInRange(d.year,d.month,d.day);
 			});
 
-			const totalObsCount = thisHour.reduce(function(a, d){
-				return a = a + +d.count;
-			}, 0);
-			const obsObject = {
-				hour: theHour,
-				observations: totalObsCount
-			};
-			mhObs.push(obsObject);
+			cameraArray.forEach( (camera) => {
+				const totalObsCount = thisHour.reduce(function(a, d){
+					return (d.camera === camera) ? (a = a + +d.count) : a;
+				}, 0);
+				const obsObject = {
+					hour: theHour,
+					camera: camera,
+					observations: totalObsCount
+				};
+				mhObs.push(obsObject);
+			});
 		}
 		monthlyHourObsObject.push( mhObs );
 	}
@@ -375,11 +377,7 @@ function renderGraphs(){
 			});
 			cameraArray.forEach( (camera) => {
 				const totalObsCount = thisHour.reduce(function(a, d){
-					if(d.camera === camera){
-						return a = a + +d.count;
-					}else{
-						return a;
-					}
+					return (d.camera === camera) ? a = a + +d.count : a;
 				}, 0);
 				const obsObject = {
 					hour: theHour,
@@ -694,9 +692,8 @@ function renderGraphs(){
 	createStackedHBarGraph("#obsPerHourAveragePerDayStackedCamera", "Hourly observations, average by day - by camera", obsPerHourAveragePerDayStackedCameraObject, "hour", "camera", "average");
 
 	for(let i=0; i<12; i++){
-		// console.log(monthArray[i]);
 		const myDiv = "#obsPerHour" + monthArray[i];
-		createHBarGraph(myDiv, "Animals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "observations");
+		createStackedHBarGraph(myDiv, "Animals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "camera", "observations");
 	}
 	for(let i=0; i<12; i++){
 		const myDiv = "#obsPerHourDeer" + monthArray[i];
