@@ -32,7 +32,6 @@
                 }
             },
             computed: {
-				/*
                 q1 : function(){
                     return ["obsPerHourJanuary","obsPerHourFebruary","obsPerHourMarch"];
                 },
@@ -44,8 +43,19 @@
                 },
                 q4 : function(){
                     return ["obsPerHourOctober","obsPerHourNovember","obsPerHourDecember"];
+                },
+                q1_deer : function(){
+                    return ["obsPerHourDeerJanuary","obsPerHourDeerFebruary","obsPerHourDeerMarch"];
+                },
+                q2_deer : function(){
+                    return ["obsPerHourDeerApril","obsPerHourDeerMay","obsPerHourDeerJune"];
+                },
+                q3_deer : function(){
+                    return ["obsPerHourDeerJuly","obsPerHourDeerAugust","obsPerHourDeerSeptember"];
+                },
+                q4_deer : function(){
+                    return ["obsPerHourDeerOctober","obsPerHourDeerNovember","obsPerHourDeerDecember"];
                 }
-				*/
             },
             mounted: function() {
 				const arr = calculateMinMaxDateRange(DATA);
@@ -89,25 +99,33 @@
 			<td><div id="obsPerMonthAveragePerMonthStackedCamera"></div></td>
 			<td><div id="obsPerHourAveragePerDayStackedCamera"></div></td>
 		</tr>
-			<td><div id="obsPerHourJanuary"></div></td>
-			<td><div id="obsPerHourFebruary"></div></td>
-			<td><div id="obsPerHourMarch"></div></td>
+			<td v-for="n in q1"><div :id="n"></div></td>
 		</tr>
 		<tr>
-			<td><div id="obsPerHourApril"></div></td>
-			<td><div id="obsPerHourMay"></div></td>
-			<td><div id="obsPerHourJune"></div></td>
+			<td v-for="n in q2"><div :id="n"></div></td>
 		</tr>
 		<tr>
-			<td><div id="obsPerHourJuly"></div></td>
-			<td><div id="obsPerHourAugust"></div></td>
-			<td><div id="obsPerHourSeptember"></div></td>
+			<td v-for="n in q3"><div :id="n"></div></td>
 		</tr>
 		<tr>
-			<td><div id="obsPerHourOctober"></div></td>
-			<td><div id="obsPerHourNovember"></div></td>
-			<td><div id="obsPerHourDecember"></div></td>
+			<td v-for="n in q4"><div :id="n"></div></td>
 		</tr>
+
+		</tr>
+			<td v-for="n in q1_deer"><div :id="n"></div></td>
+		</tr>
+		<tr>
+			<td v-for="n in q2_deer"><div :id="n"></div></td>
+		</tr>
+		<tr>
+			<td v-for="n in q3_deer"><div :id="n"></div></td>
+		</tr>
+		<tr>
+			<td v-for="n in q4_deer"><div :id="n"></div></td>
+		</tr>
+
+
+
 		<tr>
 			<td colspan="3"><div id="dayByDayObs"></div> </td>
 		</tr>
@@ -170,6 +188,7 @@ function renderGraphs(){
 	const obsPerHourAveragePerDayStackedCameraObject = [];
 
 	const monthlyHourObsObject = [];
+	const monthlyHourDeerObsObject = [];
 	const dayByDayObsObject = [];
 	const dayByDayDeerObsObject = [];
 
@@ -186,6 +205,18 @@ function renderGraphs(){
 
 	const mlAccuracyAppleStandaloneObject = [];
 	const mlAccuracyApplePlusPytorchObject = [];
+
+	// preprocess deer obs, with threshold
+	const deerConfidenceThreshold = 0.85;
+	const imagesWithDeer = DEER_OBS_DATA.filter(function(d){
+		return d.classification === '1.Deer' &&
+			d.confidence >= deerConfidenceThreshold;
+	});
+	const imagesWithDeerMap = new Map();
+	imagesWithDeer.forEach((image) => {
+		imagesWithDeerMap.set( image['image'], image['confidence'] );
+	});
+
 
 	// Total obs per year - stacked by camera : obsPerYearStackedCameraObject
 	yearArray.forEach( (year) => {
@@ -312,7 +343,7 @@ function renderGraphs(){
 
 
 
-	// Observations by hour, grouped by month (12 graphs coming...)
+	// Observations by hour, grouped by month (12 graphs)
 	for(let theMonth = 1; theMonth<= 12; theMonth++){
 		let mhObs = [];
 		for(let theHour = 0; theHour <= 23; theHour++){
@@ -332,6 +363,37 @@ function renderGraphs(){
 		}
 		monthlyHourObsObject.push( mhObs );
 	}
+
+	// Deer observations by hour, grouped by month (12 graphs)
+	for(let theMonth = 1; theMonth<= 12; theMonth++){
+		let mhObs = [];
+		for(let theHour = 0; theHour <= 23; theHour++){
+			const thisHour = DATA.filter(function(d){
+				return theHour == d.hour && theMonth == d.month &&
+					imagesWithDeerMap.has(d.image) && 
+					isDateInRange(d.year,d.month,d.day);
+			});
+			cameraArray.forEach( (camera) => {
+				const totalObsCount = thisHour.reduce(function(a, d){
+					if(d.camera === camera){
+						return a = a + +d.count;
+					}else{
+						return a;
+					}
+				}, 0);
+				const obsObject = {
+					hour: theHour,
+					camera: camera,
+					observations: totalObsCount
+				};
+				mhObs.push(obsObject);
+			});
+		}
+		monthlyHourDeerObsObject.push( mhObs );
+
+	}
+
+
 
 	// Animals per day, from start to today
 	let dayIndex = new Date(oldestDate);
@@ -367,18 +429,6 @@ function renderGraphs(){
 	}
 
 	////// Deer obs by day
-	// preprocess deer obs: 
-	const deerConfidenceThreshold = 0.85;
-	const imagesWithDeer = DEER_OBS_DATA.filter(function(d){
-		return d.classification === '1.Deer' &&
-			d.confidence >= deerConfidenceThreshold;
-	});
-	const imagesWithDeerMap = new Map();
-	imagesWithDeer.forEach((image) => {
-		imagesWithDeerMap.set( image['image'], image['confidence'] );
-	});
-
-
 
 
 	//// Obs by week - stacked by camera
@@ -631,13 +681,6 @@ function renderGraphs(){
 	const mlAccuracyApplePlusPytorchTitle = "ML Accuracy - Yolo, PyTorch and Apple ML combined (" + 
 		Math.round(100*(truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative)) + "%)";
 
-
-
-
-
-
-
-
 	// #### Start rendering data into graphs ####
 
 	// Generate yearly observations
@@ -655,6 +698,11 @@ function renderGraphs(){
 		const myDiv = "#obsPerHour" + monthArray[i];
 		createHBarGraph(myDiv, "Animals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "observations");
 	}
+	for(let i=0; i<12; i++){
+		const myDiv = "#obsPerHourDeer" + monthArray[i];
+		createStackedHBarGraph(myDiv, "Deer observed per hour, in " + monthArray[i], monthlyHourDeerObsObject[i], "hour", "camera", "observations");
+	}
+
 
 	// ML Accuracy graphs
 	createStackedHBarGraph("#mlAccuracyAppleStandalone", mlAccuracyAppleStandaloneTitle, mlAccuracyAppleStandaloneObject, "correctness", "group", "count");
