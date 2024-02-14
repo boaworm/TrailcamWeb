@@ -9,7 +9,10 @@
 	<script src="oklahoma_observations.json.js"></script>
 	<script src="deer_observations.json.js"></script>
 	<script src="manually_sorted_categories.json.js"></script>
+	<script src="manually_classified.json.js"></script>
 	<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
 
 	<script>
 		APP = Vue.createApp({
@@ -40,28 +43,8 @@
 <div id="cameraApp">
 
 <table>
-	<!--
 	<tr>
-		<td><a href="index.html">View by manually sorted images</a></td>
-		<td></td>
-		<td></td>
-	</tr>
-	-->
-		<!--
-	<tr>
-		<td>
-		Select a camera: <select @change="cameraUpdate()" class="form-control" v-model="selectedCamera">
-			<option value="TOP">TOP</option>
-			<option value="MIDDLE">MIDDLE</option>
-			<option value="HOUSE">HOUSE</option>
-		</select>
-		</td>
-		<td></td>
-		<td></td>
-	</tr>
-		-->
-	<tr>
-		<td> <a href="index.html">Back</a></td>
+		<td><a href="index.html">Back</a></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -69,6 +52,12 @@
 		<td><div id="obsPerAnimal"></div></td>
 		<td><div class="divTableCell" id="obsPerMonth"></div></td>
 		<td><div class="divTableCell" id="obsPerHour"></div></td>
+	</tr>
+
+	<tr>
+		<td><div class="divTableCell" id="obsPieTop"></div></td>
+		<td><div class="divTableCell" id="obsPieMiddle"></div></td>
+		<td><div class="divTableCell" id="obsPieHouse"></div></td>
 	</tr>
 </table>
 </div>
@@ -80,30 +69,69 @@
 ///////// BEGIN MAIN DATA PROCESSING ////////////
 // Extract what years the code is active:
 
+function getManualCategoryForImage(image){
+
+	const matchObj = MANUALLY_CLASSIFIED.filter(function(d){
+		return d.image === image;	
+	});
+
+	if(matchObj[0]){
+		return matchObj[0].classification;
+	}else{
+		return "NONE";
+	}
+}
+
 function renderGraphs(){
 
-	/*
-	const yearArray = DATA.reduce(function (a, d) {
-		   if (a.indexOf(d.year) === -1) {
-			 a.push(d.year);
-		   }
-		   return a;
-		}, []);
-	yearArray.sort();
-	*/
 	// GLOBALS
-
 	const obsPerAnimalObject = [];
+	const obsPerCategoryCameraObject = [[]];
 
 	MANUALLY_SORTED_CATEGORIES.forEach((category) => {
-		const obs = {};
+		var obs = {};
 		obs["category"] = category.category;
 		obs["count"] = category.count;
 		obsPerAnimalObject.push(obs);
 	});
 
+	cameraArray.forEach( (camera) => {
+		obsPerCategoryCameraObject[camera] = [];	
+
+		const perCameraObs = DATA.filter(function(d){
+			return d.camera === camera &&
+					+d.count > 0;
+		});
+
+		MANUALLY_SORTED_CATEGORIES.forEach( (categoryObj) => {
+			const category = categoryObj.category;
+
+			const totalObservations = perCameraObs.reduce(function(a,d){
+				if( getManualCategoryForImage(d.image) === category ){
+					return a + +d.count;
+				}else{
+					return a;
+				}
+			},0);
+
+			const obj = {
+				"category" : category,
+				"count" : totalObservations
+			};
+			obsPerCategoryCameraObject[camera].push(obj);
+		});
+
+	});
+
+
 	// #### Start rendering data into graphs ####
 	createHBarGraph("#obsPerAnimal", "Total images per category", obsPerAnimalObject, "category", "count");
+
+	// pie charts, one for each camera
+	createPieChart("#obsPieTop", "Animal distribution - Top camera", obsPerCategoryCameraObject["TOP"]);
+	createPieChart("#obsPieMiddle", "Animal distribution - Middle camera", obsPerCategoryCameraObject["MIDDLE"]);
+	createPieChart("#obsPieHouse", "Animal distribution - House camera", obsPerCategoryCameraObject["HOUSE"]);
+
 }
 </script>
 
