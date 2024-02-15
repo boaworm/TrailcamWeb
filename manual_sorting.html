@@ -171,7 +171,7 @@ function renderGraphs(){
 		return isDateInRange(d.year,d.month,d.day);
 	});
 
-	// last four days of each category
+	// last five days of each category
 	MANUALLY_SORTED_CATEGORIES.forEach( (categoryObj) => {
 		const category = categoryObj.category;
 		currentDate = new Date(dateRangeFrom);
@@ -222,7 +222,7 @@ function renderGraphs(){
 		const category = categoryObj.category;
 		const catName = category.split(".")[1];
 		const divName = "#" + catName
-		const title = "Last four days of " + catName + " observations";
+		const title = "Last five days of " + catName + " observations";
 		// console.log("Creating graph with divName="+divName+ ", catName=" + catName);
 		// console.log("lastFourDaysObsObject["+catName+"] contains " + lastFourDaysObsObject[catName].length + " objects");
 		createStackedHBarGraph(divName, title, lastFourDaysObsObject[catName], "hour", "camera", "observations", 4, 1);
