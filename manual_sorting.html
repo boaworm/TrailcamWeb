@@ -10,31 +10,39 @@
 	<script src="deer_observations.json.js"></script>
 	<script src="manually_sorted_categories.json.js"></script>
 	<script src="manually_classified.json.js"></script>
+	<!--
 	<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+	-->
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 
 	<script>
+
 		APP = Vue.createApp({
 			props: {},
 			data: function() {
 				return {
-					// selectedCamera : "TOP",
+					CLASSIFICATIONS : ["argh", "doh"],
 				};
 			},
 			methods: {
-				/*
-				cameraUpdate : function(){
-					renderGraphs(this.selectedCamera);
+				calculateCategories : function(){
+					this.CLASSIFICATIONS = [];
+					MANUALLY_SORTED_CATEGORIES.forEach( (categoryObj) => {	
+						this.CLASSIFICATIONS.push( categoryObj.category.split(".")[1] );
+					});
+					console.log("CLASSIFICATIONS now have " + this.CLASSIFICATIONS.length + " items in it");
 				}
-				*/
 			},
-			computed: { },
+			computed: {},
 			mounted: function() {
+				this.calculateCategories();
 				renderGraphs();
-				// renderGraphs(this.selectedCamera);
-			}
+			},
 		});
+
+
 	</script>
 
 </head>
@@ -45,6 +53,7 @@
 <table>
 	<tr>
 		<td><a href="index.html">Back</a> (none of this updates automatically, may be data lag)</td>
+		<td></td>
 		<td></td>
 		<td></td>
 	</tr>
@@ -59,14 +68,22 @@
 		<td><div class="divTableCell" id="obsPieMiddle"></div></td>
 		<td colspan="2"><div class="divTableCell" id="obsPieHouse"></div></td>
 	</tr>
+
+	<!--
 	<tr>
 		<td colspan="4"><div id="lastFourDaysDeerObs"></div> </td>
 	</tr>
 	<tr>
 		<td colspan="4"><div id="lastFourDaysRacoonObs"></div> </td>
 	</tr>
+	<tr v-for="classification in CLASSIFICATIONS">
+		<td colspan="4">{{classification}}<div :id="classification"></td>
+	</tr>
+	-->
 
-
+	<tr v-for="classification in CLASSIFICATIONS">
+		<td colspan="4"><div class="divTableCell" :id="classification">{{classification}}</div></td>
+	</tr>
 
 </table>
 </div>
@@ -76,8 +93,6 @@
 
 <script>
 ///////// BEGIN MAIN DATA PROCESSING ////////////
-// Extract what years the code is active:
-
 function getManualCategoryForImage(image){
 	const matchObj = MANUALLY_CLASSIFIED.filter(function(d){
 		return d.image === image;	
@@ -97,6 +112,7 @@ function renderGraphs(){
 	const obsPerCategoryCameraObject = [[]];
 	const lastFourDaysDeerObsObject = [];
 	const lastFourDaysRacoonObsObject = [];
+	const lastFourDaysObsObject = {};
 
 	const deerConfidenceThreshold = 0.85;
     const imagesWithDeer = DEER_OBS_DATA.filter(function(d){
@@ -109,12 +125,17 @@ function renderGraphs(){
     });
 
 
-	MANUALLY_SORTED_CATEGORIES.forEach((category) => {
+	MANUALLY_SORTED_CATEGORIES.forEach((categoryObj) => {
 		var obs = {};
-		obs["category"] = category.category;
-		obs["count"] = category.count;
+		obs["category"] = categoryObj.category;
+		obs["count"] = categoryObj.count;
 		obsPerAnimalObject.push(obs);
+
+		const catName = (categoryObj.category.split("."))[1];
+		// console.log("inserting.. catName=" + catName);
+		lastFourDaysObsObject[catName] = [];
 	});
+	console.log("lastFourDaysObsObject = " + JSON.stringify( lastFourDaysObsObject) );
 
 	cameraArray.forEach( (camera) => {
 		obsPerCategoryCameraObject[camera] = [];	
@@ -149,12 +170,13 @@ function renderGraphs(){
 	dateRangeFrom = new Date();
 	dateRangeFrom.setDate(dateRangeFrom.getDate()-4);
 	var currentDate = new Date(dateRangeFrom);
-	console.log("dateRangeTo = " + dateRangeTo);
+	// console.log("dateRangeTo = " + dateRangeTo);
 
 	const last4days = DATA.filter(function(d){
 		return isDateInRange(d.year,d.month,d.day);
 	});
 
+	/*
 	for(;currentDate <= dateRangeTo;currentDate.setDate(currentDate.getDate()+1)){
 		for(var h=0;h<24;h++){
 			const dayHourObservations = last4days.filter(function(d){
@@ -180,8 +202,10 @@ function renderGraphs(){
 			});
 		}
 	}
+	*/
 
 	// last four days - racoons
+	/*
 	currentDate = new Date(dateRangeFrom);
 	for(;currentDate <= dateRangeTo;currentDate.setDate(currentDate.getDate()+1)){
 		for(var h=0;h<24;h++){
@@ -208,6 +232,45 @@ function renderGraphs(){
 			});
 		}
 	}
+	*/
+
+	// last four days of each category
+	MANUALLY_SORTED_CATEGORIES.forEach( (categoryObj) => {
+		const category = categoryObj.category;
+		currentDate = new Date(dateRangeFrom);
+		for(;currentDate <= dateRangeTo;currentDate.setDate(currentDate.getDate()+1)){
+			for(let h=0;h<24;h++){
+				const dayHourObservations = last4days.filter(function(d){
+					return d.hour==h && d.day == currentDate.getDate() &&
+						getManualCategoryForImage(d.image) === category;
+				});
+				// console.log("there are " + dayHourObservations.length + " images for category = " + category );
+				cameraArray.forEach( (camera) => {
+					let animalCount = dayHourObservations.reduce(function(a,d){
+						if(d.camera === camera){
+							return a + +d.count;
+						}else{
+							return a;
+						}
+					},0);
+					// console.log("animalCount = " + animalCount);
+
+					const timeString = numericToTextMonth(currentDate.getMonth()+1).substr(0,3) + " " + currentDate.getDate() + ",     " + String(h).padStart(2,0) + ":00";
+					const obj = {
+						"hour" : timeString,
+						"camera" : camera,
+						"observations" : animalCount
+					};
+					const catName = category.split(".")[1];
+					lastFourDaysObsObject[catName].push(obj);
+					// console.log(camera + " | after pushing to lastFourDaysObsObject[" + catName + "], length is " + lastFourDaysObsObject[catName].length);
+				});
+			}
+		}
+
+
+	});
+
 
 	// #### Start rendering data into graphs ####
 	createHBarGraph("#obsPerAnimal", "Total images per category", obsPerAnimalObject, "category", "count");
@@ -217,15 +280,27 @@ function renderGraphs(){
 	createPieChart("#obsPieMiddle", "Animal distribution - Middle camera", obsPerCategoryCameraObject["MIDDLE"]);
 	createPieChart("#obsPieHouse", "Animal distribution - House camera", obsPerCategoryCameraObject["HOUSE"]);
 
+	/*
 	createStackedHBarGraph("#lastFourDaysDeerObs", "Last four days of deer observations", lastFourDaysDeerObsObject, "hour", "camera", "observations", 4, 1);
 	createStackedHBarGraph("#lastFourDaysRacoonObs", "Last four days of Racoon observations", lastFourDaysRacoonObsObject, "hour", "camera", "observations", 4, 1);
+	*/
 
+	MANUALLY_SORTED_CATEGORIES.forEach((categoryObj) => {
+		const category = categoryObj.category;
+		const catName = category.split(".")[1];
+		const divName = "#" + catName
+		const title = "Last four days of " + catName + " observations";
+		console.log("Creating graph with divName="+divName+ ", catName=" + catName);
+		// console.log("lastFourDaysObsObject["+catName+"] contains " + lastFourDaysObsObject[catName].length + " objects");
+		createStackedHBarGraph(divName, title, lastFourDaysObsObject[catName], "hour", "camera", "observations", 4, 1);
+	});
 
 }
+
 </script>
 
 <script>
-	APP.mount('#cameraApp');
+	APP.mount("#cameraApp");
 </script>
 
 </body>

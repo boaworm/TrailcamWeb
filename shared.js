@@ -292,6 +292,13 @@ const width = 450,
     height = 450,
     margin = 40;
 
+	// Remove old SVGs
+	const myNode = document.getElementById(divName.substring(1));
+	while(myNode && myNode.firstChild){
+		myNode.removeChild(myNode.lastChild);
+	}
+
+
 // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
 const radius = Math.min(width, height) / 2 - margin
 
