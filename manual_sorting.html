@@ -38,8 +38,13 @@
 			computed: {},
 			mounted: function() {
 				this.calculateCategories();
+				setTimeout(renderGraphs,0);
+			},
+			/*
+			updated: function {
 				renderGraphs();
 			},
+			*/
 		});
 
 
