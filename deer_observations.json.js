@@ -9496,6 +9496,126 @@ DEER_OBS_DATA=
         "confidence": 0.989540933756464
     },
     {
+        "confidence": 0.5586332564805427,
+        "classification": "1.Deer",
+        "image": "MIDDLE_2024-02-14T025700_PICT2295_202402140902YG59Z.JPG"
+    },
+    {
+        "image": "TOP_2024-02-14T175000_PICT6446_2024021500007K6HV.JPG",
+        "classification": "1.Deer",
+        "confidence": 0.6778652004489638
+    },
+    {
+        "classification": "1.Deer",
+        "confidence": 0.8856719649929983,
+        "image": "MIDDLE_2024-02-14T015100_PICT2291_202402140902WU8M5.JPG"
+    },
+    {
+        "classification": "1.Deer",
+        "confidence": 0.7934762303572206,
+        "image": "TOP_2024-02-14T220100_PICT6449_202402150600ER5CS.JPG"
+    },
+    {
+        "image": "TOP_2024-02-14T221100_PICT6451_202402150600LOHK8.JPG",
+        "confidence": 0.7588688483969717,
+        "classification": "1.Deer"
+    },
+    {
+        "confidence": 0.8952286282058184,
+        "image": "MIDDLE_2024-02-14T023000_PICT2294_202402140902MWMEN.JPG",
+        "classification": "1.Deer"
+    },
+    {
+        "image": "TOP_2024-02-14T001200_PICT6427_202402140800HKXX4.JPG",
+        "classification": "1.Deer",
+        "confidence": 0.9137353017068027
+    },
+    {
+        "classification": "1.Deer",
+        "confidence": 0.8847771946878907,
+        "image": "MIDDLE_2024-02-14T182200_PICT2321_202402150101MLEMY.JPG"
+    },
+    {
+        "confidence": 0.9199980342530291,
+        "image": "MIDDLE_2024-02-14T021300_PICT2293_20240214090294SQB.JPG",
+        "classification": "1.Deer"
+    },
+    {
+        "confidence": 0.8725506046953874,
+        "image": "MIDDLE_2024-02-14T003800_PICT2290_202402140702OAKV4.JPG",
+        "classification": "0.NoDeer"
+    },
+    {
+        "classification": "1.Deer",
+        "confidence": 0.9095662618605642,
+        "image": "TOP_2024-02-14T000200_PICT6425_202402140800TF6F5.JPG"
+    },
+    {
+        "image": "TOP_2024-02-14T232300_PICT6452_2024021506002TTP3.JPG",
+        "confidence": 0.7745589961076352,
+        "classification": "1.Deer"
+    },
+    {
+        "confidence": 0.7835289615036168,
+        "image": "TOP_2024-02-14T204300_PICT6447_202402150400M4FVA.JPG",
+        "classification": "1.Deer"
+    },
+    {
+        "classification": "1.Deer",
+        "confidence": 0.6651828836951729,
+        "image": "TOP_2024-02-14T214400_PICT6448_2024021504009X5LP.JPG"
+    },
+    {
+        "confidence": 0.5012576873758691,
+        "image": "MIDDLE_2024-02-14T220700_PICT2323_202402150501M3UAK.JPG",
+        "classification": "1.Deer"
+    },
+    {
+        "classification": "1.Deer",
+        "confidence": 0.8858269872768657,
+        "image": "TOP_2024-02-14T000600_PICT6426_202402140800TYWDZ.JPG"
+    },
+    {
+        "image": "MIDDLE_2024-02-14T054900_PICT2306_2024021413016IPXU.JPG",
+        "confidence": 0.7967206525514687,
+        "classification": "1.Deer"
+    },
+    {
+        "classification": "1.Deer",
+        "image": "TOP_2024-02-14T174500_PICT6445_202402150000NTD7O.JPG",
+        "confidence": 0.8098250986772306
+    },
+    {
+        "confidence": 0.7254681429214616,
+        "classification": "1.Deer",
+        "image": "TOP_2024-02-14T220500_PICT6450_20240215060035BCB.JPG"
+    },
+    {
+        "confidence": 0.8776588251745552,
+        "image": "HOUSE_2024-02-14T023100_PICT1575_202402141000GWVVY.JPG",
+        "classification": "0.NoDeer"
+    },
+    {
+        "confidence": 0.9996789288185298,
+        "classification": "0.NoDeer",
+        "image": "HOUSE_2024-02-14T101800_PICT1576_202402141759HSMHR.JPG"
+    },
+    {
+        "confidence": 0.9166792113091037,
+        "image": "MIDDLE_2024-02-14T195700_PICT2322_202402150301JUOAF.JPG",
+        "classification": "1.Deer"
+    },
+    {
+        "classification": "1.Deer",
+        "confidence": 0.8641234238435237,
+        "image": "MIDDLE_2024-02-14T230400_PICT2324_202402150702GGHAW.JPG"
+    },
+    {
+        "confidence": 0.8759841617883706,
+        "image": "MIDDLE_2024-02-14T020100_PICT2292_202402140902IG5KP.JPG",
+        "classification": "1.Deer"
+    },
+    {
         "image": "TOP_2024-01-13T190500_PICT5283_2024011402005EERM.JPG",
         "classification": "0.NoDeer",
         "confidence": 0.8921463568810334
