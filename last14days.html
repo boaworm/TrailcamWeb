@@ -115,7 +115,7 @@
 					camera : camera,
 					observations : animalCount
 				};
-				console.log("Adding object : " + obj.time + " for " + obj.camera + " and " + obj.observations + " observations");
+				// console.log("Adding object : " + obj.time + " for " + obj.camera + " and " + obj.observations + " observations");
 				const index = Math.floor(daysProcessed/3);
 				animalHourByHourObsObjectArray[index].push(obj);
 			});
@@ -149,24 +149,25 @@
 					camera : camera,
 					observations : animalCount
 				};
-				console.log("Adding object : " + obj.time + " for " + obj.camera + " and " + obj.observations + " observations");
+				// console.log("Adding object : " + obj.time + " for " + obj.camera + " and " + obj.observations + " observations");
 				const index = Math.floor(daysProcessed/3);
 				deerHourByHourObsObjectArray[index].push(obj);
 			});
 		}
 	}
 
+	// Invoke graph generation 
+	const toRange = 4;
+	for(let i=0;i<toRange;i++){
+		let divName = "#hourByHourDeerObs" + (i+1);
+		let title = "Deer observations (" + (i+1) + "/" + toRange + "), hour by hour";
+		createStackedHBarGraph(divName, title, deerHourByHourObsObjectArray[i], "time", "camera", "observations", 3, 1);
 
-	createStackedHBarGraph("#hourByHourDeerObs1", "Deer observations, hour by hour" , deerHourByHourObsObjectArray[0], "time", "camera", "observations", 3, 1);
-	createStackedHBarGraph("#hourByHourDeerObs2", "Deer observations, hour by hour" , deerHourByHourObsObjectArray[1], "time", "camera", "observations", 3, 1);
-	createStackedHBarGraph("#hourByHourDeerObs3", "Deer observations, hour by hour" , deerHourByHourObsObjectArray[2], "time", "camera", "observations", 3, 1);
-	createStackedHBarGraph("#hourByHourDeerObs4", "Deer observations, hour by hour" , deerHourByHourObsObjectArray[3], "time", "camera", "observations", 3, 1);
+		divName = "#hourByHourAnimalObs" + (i+1);
+		title = "Animal observations (" + (i+1) + "/" + toRange + "), hour by hour";
+		createStackedHBarGraph(divName, title, animalHourByHourObsObjectArray[i], "time", "camera", "observations", 3, 1);
+	}
 
-
-	createStackedHBarGraph("#hourByHourAnimalObs1", "Animal observations, hour by hour" , animalHourByHourObsObjectArray[0], "time", "camera", "observations", 3, 1);
-	createStackedHBarGraph("#hourByHourAnimalObs2", "Animal observations, hour by hour" , animalHourByHourObsObjectArray[1], "time", "camera", "observations", 3, 1);
-	createStackedHBarGraph("#hourByHourAnimalObs3", "Animal observations, hour by hour" , animalHourByHourObsObjectArray[2], "time", "camera", "observations", 3, 1);
-	createStackedHBarGraph("#hourByHourAnimalObs4", "Animal observations, hour by hour" , animalHourByHourObsObjectArray[3], "time", "camera", "observations", 3, 1);
 </script>
 
 </div>
