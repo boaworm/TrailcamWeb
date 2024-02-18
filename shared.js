@@ -226,25 +226,30 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		.text(title);
 
 	// Attempt to add sunrise and sunset, if bar labels are "Jan 01 03:00"
-	const regex = /^[A-Z][a-z][a-z]\s\d+\s\d\d:\d\d$/;
-	if(daytimeIndicator && distinctBarLabels.length > 0 && distinctBarLabels[0].length >= 10 && distinctBarLabels[0].match(regex)){
-		const daytimeArr = [];
-		for(let i=0;i<distinctBarLabels.length;i++){
-			const hour = distinctBarLabels[i].substring(7,9);
-			if( hour >= sunriseHour && hour <= sunsetHour ){
-				daytimeArr.push(i);
+	if(daytimeIndicator && distinctBarLabels.length > 0 && distinctBarLabels[0].length >= 10){
+		const regex = /^[A-Z][a-z][a-z]\s\d+\s(\d\d):\d\d$/;
+		let match = distinctBarLabels[0].match(regex);
+		if(match){
+			const daytimeArr = [];
+			//console.log("match = " + match[1]);
+			for(let i=0;i<distinctBarLabels.length;i++){
+				match = distinctBarLabels[i].match(regex);
+				const hour = match[1];
+				if( hour >= sunriseHour && hour <= sunsetHour ){
+					daytimeArr.push(i);
+				}
 			}
-		}
-		
-		// Adding small orange dots to show daytime
-		svg.selectAll("sunshineDots")
-			.data(daytimeArr)
-			.enter()
-			.append("circle")
-				.attr("cx", function(d,i){ return 10 + d*18;})
-				.attr("cy", function(d,i){ return height-8})
-				.attr("r", 3)
-				.style("fill", "orange"); 
+
+			// Adding small orange dots to show daytime
+			svg.selectAll("daytimeDots")
+				.data(daytimeArr)
+				.enter()
+				.append("circle")
+					.attr("cx", function(d,i){ return 10 + d*18;})
+					.attr("cy", function(d,i){ return height-8})
+					.attr("r", 3)
+					.style("fill", "orange"); 
+			}
 	}
 }
 
