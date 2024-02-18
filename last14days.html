@@ -121,6 +121,10 @@
 			});
 		}
 	}
+	for(let i=0;i<animalHourByHourObsObjectArray.length;i++){
+		animalHourByHourObsObjectArray[i].reverse();
+	}
+
 
 	// For deer specifically
 	currentDate = new Date(dateRangeFrom);
@@ -154,6 +158,10 @@
 				deerHourByHourObsObjectArray[index].push(obj);
 			});
 		}
+	}
+
+	for(let i=0;i<deerHourByHourObsObjectArray.length;i++){
+		deerHourByHourObsObjectArray[i].reverse();
 	}
 
 	// Invoke graph generation 
