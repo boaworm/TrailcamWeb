@@ -161,11 +161,11 @@
 	for(let i=0;i<toRange;i++){
 		let divName = "#hourByHourDeerObs" + (i+1);
 		let title = "Deer observations (" + (i+1) + "/" + toRange + "), hour by hour";
-		createStackedHBarGraph(divName, title, deerHourByHourObsObjectArray[i], "time", "camera", "observations", 3, 1);
+		createStackedHBarGraph(divName, title, deerHourByHourObsObjectArray[i], "time", "camera", "observations", 3, 1,true);
 
 		divName = "#hourByHourAnimalObs" + (i+1);
 		title = "Animal observations (" + (i+1) + "/" + toRange + "), hour by hour";
-		createStackedHBarGraph(divName, title, animalHourByHourObsObjectArray[i], "time", "camera", "observations", 3, 1);
+		createStackedHBarGraph(divName, title, animalHourByHourObsObjectArray[i], "time", "camera", "observations", 3, 1,true);
 	}
 
 </script>

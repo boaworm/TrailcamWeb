@@ -1,3 +1,13 @@
+var SunriseSunsetJS=function(t){"use strict";var e=90.8333;function n(t){return Math.sin(2*t*Math.PI/360)}function a(t){return 360*Math.acos(t)/(2*Math.PI)}function r(t){return Math.cos(2*t*Math.PI/360)}function u(t,e){var n=t%e;return n<0?n+e:n}function i(t,e,i,o,M){var h,c,f=function(t){return Math.ceil((t.getTime()-new Date(t.getFullYear(),0,1).getTime())/864e5)}(M),s=e/15,l=i?f+(6-s)/24:f+(18-s)/24,g=.9856*l-3.289,v=u(g+1.916*n(g)+.02*n(2*g)+282.634,360),P=.91764*(h=v,Math.tan(2*h*Math.PI/360));c=u(c=360/(2*Math.PI)*Math.atan(P),360),c+=90*Math.floor(v/90)-90*Math.floor(c/90),c/=15;var D,I=.39782*n(v),S=r((D=I,360*Math.asin(D)/(2*Math.PI))),d=(r(o)-I*n(t))/(S*r(t)),w=u((i?360-a(d):a(d))/15+c-.06571*l-6.622-e/15,24),T=Date.UTC(M.getFullYear(),M.getMonth(),M.getDate());return new Date(T+36e5*w)}return t.getSunrise=function(t,n,a){return void 0===a&&(a=new Date),i(t,n,!0,e,a)},t.getSunset=function(t,n,a){return void 0===a&&(a=new Date),i(t,n,!1,e,a)},Object.defineProperty(t,"__esModule",{value:!0}),t}({});
+
+const sunrise = SunriseSunsetJS.getSunrise(35.0078, -97.0929);
+const sunset = SunriseSunsetJS.getSunset(35.0078, -97.0929);
+const sunriseHour = sunrise.getHours();
+const sunsetHour = sunset.getHours();
+
+//console.log("sunrise = " + sunriseHour);
+//console.log("sunset = " + sunsetHour);
+
 Date.prototype.getWeek = function() {
 	var onejan = new Date(this.getFullYear(),0,1);
 	var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
@@ -80,7 +90,7 @@ function calculateMinMaxDateRange(DATA){
 
 
 // Repeatable graph creation, StackedHBAR
-function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel, valueLabel,  widthScale = 1, heightScale = 1){
+function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel, valueLabel,  widthScale = 1, heightScale = 1, daytimeIndicator = false){
 	if(dataObject == null){
 		console.log("ERROR: Invoked createHBarGraph with dataObject null");
 	}
@@ -183,6 +193,8 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 					.attr("height", function(d) { return y(d[0]) - y(d[1]); })
 					.attr("width",x.bandwidth());
 
+	//// Group labels
+	// Circle
 	var keys = distinctGroupLabels;
 	svg.selectAll("mydots")
 		.data(keys)
@@ -192,8 +204,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 			.attr("cy", function(d,i){ return height+58})
 			.attr("r", 7)
 			.style("fill", function(d){ return color(d)})
-
-	// Group labels
+	// Text
 	svg.selectAll("mylabels")
 		.data(keys)
 		.enter()
@@ -213,6 +224,28 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		.attr("text-anchor", "middle")
 		.style("font-size", "16px")
 		.text(title);
+
+	// Attempt to add sunrise and sunset, if bar labels are "Jan 01 03:00"
+	const regex = /^[A-Z][a-z][a-z]\s\d+\s\d\d:\d\d$/;
+	if(daytimeIndicator && distinctBarLabels.length > 0 && distinctBarLabels[0].length >= 10 && distinctBarLabels[0].match(regex)){
+		const daytimeArr = [];
+		for(let i=0;i<distinctBarLabels.length;i++){
+			const hour = distinctBarLabels[i].substring(7,9);
+			if( hour >= sunriseHour && hour <= sunsetHour ){
+				daytimeArr.push(i);
+			}
+		}
+		
+		// Adding small orange dots to show daytime
+		svg.selectAll("sunshineDots")
+			.data(daytimeArr)
+			.enter()
+			.append("circle")
+				.attr("cx", function(d,i){ return 10 + d*18;})
+				.attr("cy", function(d,i){ return height-8})
+				.attr("r", 3)
+				.style("fill", "orange"); 
+	}
 }
 
 // Repeatable graph creation, HBAR
@@ -288,74 +321,74 @@ function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthSca
 
 
 function createPieChart(divName, title, dataObject){
-const width = 450,
-    height = 450,
-    margin = 40;
+	const width = 450,
+		height = 450,
+		margin = 40;
 
-	// Remove old SVGs
-	const myNode = document.getElementById(divName.substring(1));
-	while(myNode && myNode.firstChild){
-		myNode.removeChild(myNode.lastChild);
+		// Remove old SVGs
+		const myNode = document.getElementById(divName.substring(1));
+		while(myNode && myNode.firstChild){
+			myNode.removeChild(myNode.lastChild);
+		}
+
+
+	// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+	const radius = Math.min(width, height) / 2 - margin
+
+	// append the svg object to the div called 'my_dataviz'
+	const svg = d3.select(divName)
+	  .append("svg")
+		.attr("width", width)
+		.attr("height", height)
+	  .append("g")
+		.attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+	const data = {};
+	for(const [key,value] of Object.entries(dataObject)){
+		data[ value.category ] = +value.count;
 	}
 
+	// set the color scale
+	const color = d3.scaleOrdinal()
+	  .range(d3.schemeSet2);
 
-// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-const radius = Math.min(width, height) / 2 - margin
+	// Compute the position of each group on the pie:
+	const pie = d3.pie()
+	  .value(function(d) {return d[1]});
 
-// append the svg object to the div called 'my_dataviz'
-const svg = d3.select(divName)
-  .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", `translate(${width / 2}, ${height / 2})`);
+	const data_ready = pie(Object.entries(data));
 
-const data = {};
-for(const [key,value] of Object.entries(dataObject)){
-	data[ value.category ] = +value.count;
-}
+	// shape helper to build arcs:
+	const arcGenerator = d3.arc()
+	  .innerRadius(0)
+	  .outerRadius(radius);
 
-// set the color scale
-const color = d3.scaleOrdinal()
-  .range(d3.schemeSet2);
+	// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+	svg
+	  .selectAll('mySlices')
+	  .data(data_ready)
+	  .join('path')
+		.attr('d', arcGenerator)
+		.attr('fill', function(d){ return(color(d.data[0])) })
+		.attr("stroke", "black")
+		.style("stroke-width", "2px")
+		.style("opacity", 0.7);
 
-// Compute the position of each group on the pie:
-const pie = d3.pie()
-  .value(function(d) {return d[1]});
+	// Now add the annotation. Use the centroid method to get the best coordinates
+	svg
+	  .selectAll('mySlices')
+	  .data(data_ready)
+	  .join('text')
+	  .text(function(d){ return d.data[0]})
+	  .attr("transform", function(d) { return `translate(${arcGenerator.centroid(d)})`})
+	  .style("text-anchor", "middle")
+	  .style("font-size", 17);
 
-const data_ready = pie(Object.entries(data));
-
-// shape helper to build arcs:
-const arcGenerator = d3.arc()
-  .innerRadius(0)
-  .outerRadius(radius);
-
-// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-svg
-  .selectAll('mySlices')
-  .data(data_ready)
-  .join('path')
-    .attr('d', arcGenerator)
-    .attr('fill', function(d){ return(color(d.data[0])) })
-    .attr("stroke", "black")
-    .style("stroke-width", "2px")
-    .style("opacity", 0.7);
-
-// Now add the annotation. Use the centroid method to get the best coordinates
-svg
-  .selectAll('mySlices')
-  .data(data_ready)
-  .join('text')
-  .text(function(d){ return d.data[0]})
-  .attr("transform", function(d) { return `translate(${arcGenerator.centroid(d)})`})
-  .style("text-anchor", "middle")
-  .style("font-size", 17);
-
-    svg.append("text")
-		.attr("x",1) 
-		.attr("y", -200 )
-		.attr("text-anchor", "middle")
-		.style("font-size", "16px")
-		.text(title);
+		svg.append("text")
+			.attr("x",1) 
+			.attr("y", -200 )
+			.attr("text-anchor", "middle")
+			.style("font-size", "16px")
+			.text(title);
 
 }
