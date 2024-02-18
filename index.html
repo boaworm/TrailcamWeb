@@ -693,11 +693,11 @@ function renderGraphs(){
 
 	for(let i=0; i<12; i++){
 		const myDiv = "#obsPerHour" + monthArray[i];
-		createStackedHBarGraph(myDiv, "Animals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "camera", "observations");
+		createStackedHBarGraph(myDiv, "Animals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "camera", "observations",1,1,true, i);
 	}
 	for(let i=0; i<12; i++){
 		const myDiv = "#obsPerHourDeer" + monthArray[i];
-		createStackedHBarGraph(myDiv, "Deer observed per hour, in " + monthArray[i], monthlyHourDeerObsObject[i], "hour", "camera", "observations");
+		createStackedHBarGraph(myDiv, "Deer observed per hour, in " + monthArray[i], monthlyHourDeerObsObject[i], "hour", "camera", "observations",1,1,true, i);
 	}
 
 

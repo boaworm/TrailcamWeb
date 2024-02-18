@@ -337,7 +337,7 @@ createHBarGraph("#obsPerHour", "Total animal observations, per hour", hourObsObj
 for(let i=0; i<12; i++){
 	// console.log(monthArray[i]);
 	const myDiv = "#obsPerHour" + monthArray[i];
-	createHBarGraph(myDiv, "Anmals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "observations");
+	createHBarGraph(myDiv, "Anmals observed per hour, in " + monthArray[i], monthlyHourObsObject[i], "hour", "observations", 1, 1, true, i);
 }
 
 

@@ -1,7 +1,10 @@
 var SunriseSunsetJS=function(t){"use strict";var e=90.8333;function n(t){return Math.sin(2*t*Math.PI/360)}function a(t){return 360*Math.acos(t)/(2*Math.PI)}function r(t){return Math.cos(2*t*Math.PI/360)}function u(t,e){var n=t%e;return n<0?n+e:n}function i(t,e,i,o,M){var h,c,f=function(t){return Math.ceil((t.getTime()-new Date(t.getFullYear(),0,1).getTime())/864e5)}(M),s=e/15,l=i?f+(6-s)/24:f+(18-s)/24,g=.9856*l-3.289,v=u(g+1.916*n(g)+.02*n(2*g)+282.634,360),P=.91764*(h=v,Math.tan(2*h*Math.PI/360));c=u(c=360/(2*Math.PI)*Math.atan(P),360),c+=90*Math.floor(v/90)-90*Math.floor(c/90),c/=15;var D,I=.39782*n(v),S=r((D=I,360*Math.asin(D)/(2*Math.PI))),d=(r(o)-I*n(t))/(S*r(t)),w=u((i?360-a(d):a(d))/15+c-.06571*l-6.622-e/15,24),T=Date.UTC(M.getFullYear(),M.getMonth(),M.getDate());return new Date(T+36e5*w)}return t.getSunrise=function(t,n,a){return void 0===a&&(a=new Date),i(t,n,!0,e,a)},t.getSunset=function(t,n,a){return void 0===a&&(a=new Date),i(t,n,!1,e,a)},Object.defineProperty(t,"__esModule",{value:!0}),t}({});
 
-const sunrise = SunriseSunsetJS.getSunrise(35.0078, -97.0929);
-const sunset = SunriseSunsetJS.getSunset(35.0078, -97.0929);
+const OKLAHOMA_LAT = 35.0078;
+const OKLAHOMA_LON = -97.0929;
+
+const sunrise = SunriseSunsetJS.getSunrise(OKLAHOMA_LAT,OKLAHOMA_LON);
+const sunset = SunriseSunsetJS.getSunset(OKLAHOMA_LAT, OKLAHOMA_LON);
 const sunriseHour = sunrise.getHours();
 const sunsetHour = sunset.getHours();
 
@@ -90,7 +93,7 @@ function calculateMinMaxDateRange(DATA){
 
 
 // Repeatable graph creation, StackedHBAR
-function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel, valueLabel,  widthScale = 1, heightScale = 1, daytimeIndicator = false){
+function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel, valueLabel,  widthScale = 1, heightScale = 1, daytimeIndicator = false, monthIndex = 0){
 	if(dataObject == null){
 		console.log("ERROR: Invoked createHBarGraph with dataObject null");
 	}
@@ -204,6 +207,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 			.attr("cy", function(d,i){ return height+58})
 			.attr("r", 7)
 			.style("fill", function(d){ return color(d)})
+
 	// Text
 	svg.selectAll("mylabels")
 		.data(keys)
@@ -225,7 +229,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 		.style("font-size", "16px")
 		.text(title);
 
-	// Attempt to add sunrise and sunset, if bar labels are "Jan 01 03:00"
+	// Attempt to add sunrise and sunset, if bar labels are in format: "Jan 01 03:00"
 	if(daytimeIndicator && distinctBarLabels.length > 0 && distinctBarLabels[0].length >= 10){
 		const regex = /^[A-Z][a-z][a-z]\s\d+\s(\d\d):\d\d$/;
 		let match = distinctBarLabels[0].match(regex);
@@ -249,12 +253,42 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 					.attr("cy", function(d,i){ return height-8})
 					.attr("r", 3)
 					.style("fill", "orange"); 
+		}
+	}
+
+	// If there are exactly 24 bars, we have a "for-each-hour" graph. Use that one to plot sunrise and sunset
+	// We need to consider different sunrise/sunset per month, as per argument.
+	if(daytimeIndicator && distinctBarLabels.length === 24 && +(distinctBarLabels[0]) === 0){
+		let dateObject = new Date();
+		dateObject.setDate(15);//hardcode to middle of month
+		dateObject.setMonth(monthIndex);
+		let tmpSunrise = SunriseSunsetJS.getSunrise(OKLAHOMA_LAT, OKLAHOMA_LON, dateObject);
+		let tmpSunset = SunriseSunsetJS.getSunset(OKLAHOMA_LAT, OKLAHOMA_LON, dateObject);
+		let tmpSunriseHour = tmpSunrise.getHours();
+		let tmpSunsetHour = tmpSunset.getHours();
+
+		const daytimeArr = [];
+		//console.log("match = " + match[1]);
+		for(let i=0;i<distinctBarLabels.length;i++){
+			if( i >= tmpSunriseHour && i <= tmpSunsetHour ){
+				daytimeArr.push(i);
 			}
+		}
+
+		// Adding small orange dots to show daytime
+		svg.selectAll("daytimeDots")
+			.data(daytimeArr)
+			.enter()
+			.append("circle")
+				.attr("cx", function(d,i){ return 10 + d*15;})
+				.attr("cy", function(d,i){ return height+23})
+				.attr("r", 3)
+				.style("fill", "orange"); 
 	}
 }
 
 // Repeatable graph creation, HBAR
-function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthScale = 1, heightScale = 1) {
+function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthScale = 1, heightScale = 1, daytimeIndicator = false, monthIndex = 1) {
 	// error flagging
 	if(dataObject == null){
 		console.log("ERROR: Invoked createHBarGraph with dataObject null");
@@ -322,8 +356,47 @@ function createHBarGraph(divName, title, dataObject, leftKey, rightKey, widthSca
 		.attr("text-anchor", "middle")
 		.style("font-size", "16px")
 		.text(title);
-}
 
+
+	// figure out X labels, and combined max X label (for Y scale)
+	var distinctBarLabels = [];
+	dataObject.forEach( (row) => {
+		if( distinctBarLabels.indexOf(row[leftKey]) === -1 ){
+			distinctBarLabels.push( row[leftKey] );
+		}
+	});
+
+	// If there are exactly 24 bars, we have a "for-each-hour" graph. Use that one to plot sunrise and sunset
+	// We need to consider different sunrise/sunset per month, as per argument.
+	if(daytimeIndicator && distinctBarLabels.length === 24 && +(distinctBarLabels[0]) === 0){
+		let dateObject = new Date();
+		dateObject.setDate(15);//hardcode to middle of month
+		dateObject.setMonth(monthIndex);
+		let tmpSunrise = SunriseSunsetJS.getSunrise(OKLAHOMA_LAT, OKLAHOMA_LON, dateObject);
+		let tmpSunset = SunriseSunsetJS.getSunset(OKLAHOMA_LAT, OKLAHOMA_LON, dateObject);
+		let tmpSunriseHour = tmpSunrise.getHours();
+		let tmpSunsetHour = tmpSunset.getHours();
+
+		const daytimeArr = [];
+		//console.log("match = " + match[1]);
+		for(let i=0;i<distinctBarLabels.length;i++){
+			if( i >= tmpSunriseHour && i <= tmpSunsetHour ){
+				daytimeArr.push(i);
+			}
+		}
+
+		// Adding small orange dots to show daytime
+		svg.selectAll("daytimeDots")
+			.data(daytimeArr)
+			.enter()
+			.append("circle")
+				.attr("cx", function(d,i){ return 10 + d*15;})
+				.attr("cy", function(d,i){ return height+23})
+				.attr("r", 3)
+				.style("fill", "orange"); 
+	}
+
+}
 
 function createPieChart(divName, title, dataObject){
 	const width = 450,
