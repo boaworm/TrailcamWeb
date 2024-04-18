@@ -596,10 +596,12 @@ function renderGraphs(){
 		}
 		
 	});
+	/*
 	console.log("CreateML : truePositive = ", truePositive);
 	console.log("CreateML : trueNegative = ", trueNegative);
 	console.log("CreateML : falsePositive = ", falsePositive);
 	console.log("CreateML : falseNegative = ", falseNegative);
+	*/
 	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"TruePositive","count":truePositive} );
 	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"TrueNegative","count":trueNegative} );
 	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"FalsePositive","count":0} );
@@ -663,10 +665,12 @@ function renderGraphs(){
 		
 	});
 
+	/*
 	console.log("Combined : truePositive = ", truePositive);
 	console.log("Combined : trueNegative = ", trueNegative);
 	console.log("Combined : falsePositive = ", falsePositive);
 	console.log("Combined : falseNegative = ", falseNegative);
+	*/
 
 	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"TruePositive","count":truePositive} );
 	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"TrueNegative","count":trueNegative} );
