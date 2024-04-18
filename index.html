@@ -168,6 +168,17 @@ const arr = calculateMinMaxDateRange(DATA);
 oldestDate = arr[0];
 newestDate = arr[1];
 
+function getObservationByImageName(THE_DATA_ARRAY, imageName){
+	let matchingElement = null;
+
+	for(var index = 0; index < THE_DATA_ARRAY.length; index++){
+		if( THE_DATA_ARRAY[index].image === imageName ){
+			return THE_DATA_ARRAY[index];
+		}
+	}
+	return null;
+}
+
 function renderGraphs(){
 
 	// Extract what years the code is active:
@@ -556,36 +567,27 @@ function renderGraphs(){
 	getDeerObsPerHour("MIDDLE", deerObsPerHourMiddleCameraObject);
 	getDeerObsPerHour("HOUSE", deerObsPerHourHouseCameraObject);
 
-	// Calculate ML accuracy graphs 
+	//**** Calculate ML accuracy graphs ****
 	var truePositive = 0;
 	var trueNegative = 0;
 	var falsePositive = 0;
 	var falseNegative = 0;
 
 	DEER_OBS_DATA.forEach( (deerObs) => {
-		const deerImageName = deerObs.image;
-		var matchingElement = null;
-		for(var manualIndex = 0; manualIndex < MANUALLY_CLASSIFIED.length; manualIndex++){
-			const manualImageName = MANUALLY_CLASSIFIED[manualIndex].image;
-			if(deerImageName == manualImageName){
-				matchingElement = MANUALLY_CLASSIFIED[manualIndex];
-				break;
-			}
-
-		}
+		const matchingElement = getObservationByImageName(MANUALLY_CLASSIFIED, deerObs.image);
 		if(matchingElement == null){
 			// Ignore 
 		}else{
 			const mlClass = deerObs.classification;
 			const humanClass = matchingElement.classification;
-			if("1.Deer" == mlClass){
-				if("1.Deer" == humanClass){
+			if("1.Deer" === mlClass){
+				if("1.Deer" === humanClass){
 					truePositive = 1 + truePositive;
 				}else{
 					falsePositive = 1 + falsePositive;
 				}
 			}else{
-				if("1.Deer" == humanClass){
+				if("1.Deer" === humanClass){
 					falseNegative = 1 + falseNegative;
 				}else{
 					trueNegative = 1 + trueNegative;
@@ -594,6 +596,10 @@ function renderGraphs(){
 		}
 		
 	});
+	console.log("CreateML : truePositive = ", truePositive);
+	console.log("CreateML : trueNegative = ", trueNegative);
+	console.log("CreateML : falsePositive = ", falsePositive);
+	console.log("CreateML : falseNegative = ", falseNegative);
 	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"TruePositive","count":truePositive} );
 	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"TrueNegative","count":trueNegative} );
 	mlAccuracyAppleStandaloneObject.push( {"correctness":"Correct","group":"FalsePositive","count":0} );
@@ -608,7 +614,7 @@ function renderGraphs(){
 		Math.round(100*(truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative)) + "%)";
 
 
-	// Show quality when combining Pytorch and Apple ML
+	//**** Show quality when combining Pytorch and Apple ML ****
 	truePositive = 0;
 	trueNegative = 0;
 	falsePositive = 0;
@@ -616,17 +622,8 @@ function renderGraphs(){
 
 
 	DEER_OBS_DATA.forEach( (deerObs) => {
-		const deerImageName = deerObs.image;
-		var matchingElement = null;
-		for(var manualIndex = 0; manualIndex < MANUALLY_CLASSIFIED.length; manualIndex++){
-			const manualImageName = MANUALLY_CLASSIFIED[manualIndex].image;
-			if(deerImageName == manualImageName){
-				matchingElement = MANUALLY_CLASSIFIED[manualIndex];
-				break;
-			}
-
-		}
-		if(matchingElement == null){
+		const matchingElement = getObservationByImageName(MANUALLY_CLASSIFIED, deerObs.image);
+		if(matchingElement === null){
 			// Ignore 
 		}else{
 			const mlClass = deerObs.classification;
@@ -634,38 +631,43 @@ function renderGraphs(){
 
 			// Look up obs count from Yolo+Pytorch
 			const obsCount = DATA.reduce( function(a,animalObs) {
-				if( animalObs.image == deerObs.image ){
+				if( animalObs.image === deerObs.image ){
 					a = a + +animalObs.count;
 				}
 				return a;
 			}, 0);
 
-			if(obsCount == 0){
-				// No anmals observed by Yolo+Pytorch
-				if(humanClass == "0.Empty"){
-					trueNegative = 1 + trueNegative;
+
+
+			if(humanClass === "1.Deer"){
+				if(mlClass === "1.Deer"){
+					truePositive++;
 				}else{
-					falseNegative = 1 + falseNegative;
+					falseNegative++;
 				}
 			}else{
-				if("1.Deer" == mlClass){
-					if("1.Deer" == humanClass){
-						truePositive = 1 + truePositive;
-					}else{
-						falsePositive = 1 + falsePositive;
-					}
+				// Definitely not a deer
+				if(obsCount === 0){
+					trueNegative++;	
 				}else{
-					if("1.Deer" == humanClass){
-						falseNegative = 1 + falseNegative;
+					if(mlClass === "1.Deer"){
+						falsePositive++;
 					}else{
-						trueNegative = 1 + trueNegative;
+						// mlClass should be === "0.NoDeer"
+						trueNegative++;
 					}
 				}
-
 			}
+
 		}
 		
 	});
+
+	console.log("Combined : truePositive = ", truePositive);
+	console.log("Combined : trueNegative = ", trueNegative);
+	console.log("Combined : falsePositive = ", falsePositive);
+	console.log("Combined : falseNegative = ", falseNegative);
+
 	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"TruePositive","count":truePositive} );
 	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"TrueNegative","count":trueNegative} );
 	mlAccuracyApplePlusPytorchObject.push( {"correctness":"Correct","group":"FalsePositive","count":0} );
