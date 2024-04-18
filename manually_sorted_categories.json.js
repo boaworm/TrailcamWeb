@@ -2,11 +2,11 @@ MANUALLY_SORTED_CATEGORIES=
 [
     {
         "category": "0.Empty",
-        "count": 1033
+        "count": 1368
     },
     {
         "category": "1.Deer",
-        "count": 2842
+        "count": 2906
     },
     {
         "category": "10.Human",
@@ -22,23 +22,23 @@ MANUALLY_SORTED_CATEGORIES=
     },
     {
         "category": "2.Racoon",
-        "count": 198
+        "count": 278
     },
     {
         "category": "3.Rabbit",
-        "count": 984
+        "count": 1034
     },
     {
         "category": "4.Squirrel",
-        "count": 401
+        "count": 745
     },
     {
         "category": "5.Dog",
-        "count": 160
+        "count": 178
     },
     {
         "category": "6.Bird",
-        "count": 41
+        "count": 117
     },
     {
         "category": "7.Hog",
@@ -46,7 +46,7 @@ MANUALLY_SORTED_CATEGORIES=
     },
     {
         "category": "8.Cat",
-        "count": 15
+        "count": 16
     },
     {
         "category": "9.Armadillo",
@@ -59,5 +59,9 @@ MANUALLY_SORTED_CATEGORIES=
     {
         "category": "13.Bobcat",
         "count": 1
+    },
+    {
+        "category": "14.Coyote",
+        "count": 2
     }
 ]
