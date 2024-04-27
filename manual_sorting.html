@@ -11,10 +11,10 @@
 	<script src="manually_sorted_categories.json.js"></script>
 	<script src="manually_classified.json.js"></script>
 	<!--
-	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-	-->
-
 	<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+	-->
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
 	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 
@@ -24,6 +24,7 @@
 			props: {},
 			data: function() {
 				return {
+					selectedAnimal : "ALL",
 					CLASSIFICATIONS : ["argh", "doh"],
 				};
 			},
@@ -34,9 +35,18 @@
 						this.CLASSIFICATIONS.push( categoryObj.category.split(".")[1] );
 					});
 					// console.log("CLASSIFICATIONS now have " + this.CLASSIFICATIONS.length + " items in it");
+				},
+				animalUpdate : function(){
+					SELECTED_ANIMAL = this.selectedAnimal;
+					renderGraphs();
+
 				}
 			},
-			computed: {},
+			computed: {
+				getAnimals : function(){
+					return this.CLASSIFICATIONS;
+				}
+			},
 			mounted: function() {
 				this.calculateCategories();
 				setTimeout(renderGraphs,0);
@@ -59,10 +69,25 @@
 <table>
 	<tr>
 		<td><a href="index.html">Back</a> (none of this updates automatically, may be data lag)</td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td colspan="3"></td>
 	</tr>
+
+	<tr>
+		<td>
+			Select an animal: <select @change="animalUpdate()" class="form-control" v-model="selectedAnimal">
+				<option v-for="animal in getAnimals" :value="animal" :name="animal">{{animal}}</option>
+			</select>
+		</td>
+		<td colspan="3"></td>
+	</tr>
+
+	<!--
+		Last 15 days of the selected animal
+	-->
+	<tr>
+		<td colspan="4"><div id="obsPerSelectedAnimal"></div></td>
+	</tr>
+
 	<tr>
 		<td><div id="obsPerAnimal"></div></td>
 		<td><div class="divTableCell" id="obsPerMonth"></div></td>
@@ -102,20 +127,22 @@ function getManualCategoryForImage(image){
 // Globals
 dateRangeTo = new Date();
 dateRangeFrom = new Date();
+let SELECTED_ANIMAL = "Empty";
 
 function renderGraphs(){
 	'use strict';
 	const obsPerAnimalObject = [];
 	const obsPerCategoryCameraObject = [[]];
-//	const lastFourDaysDeerObsObject = [];
-//	const lastFourDaysRacoonObsObject = [];
 	const lastFourDaysObsObject = {};
+	const lastFifteenDaysSelectedAnimalObsObject = [];
 
 	const deerConfidenceThreshold = 0.85;
+
     const imagesWithDeer = DEER_OBS_DATA.filter(function(d){
         return d.classification === '1.Deer' &&
             d.confidence >= deerConfidenceThreshold;
     });
+
     const imagesWithDeerMap = new Map();
     imagesWithDeer.forEach((image) => {
         imagesWithDeerMap.set( image['image'], image['confidence'] );
@@ -165,8 +192,6 @@ function renderGraphs(){
 	dateRangeFrom = new Date();
 	dateRangeFrom.setDate(dateRangeFrom.getDate()-5);
 	var currentDate = new Date(dateRangeFrom);
-	// console.log("dateRangeTo = " + dateRangeTo);
-
 	const last4days = DATA.filter(function(d){
 		return isDateInRange(d.year,d.month,d.day);
 	});
@@ -205,13 +230,58 @@ function renderGraphs(){
 				});
 			}
 		}
+	});
+
+	dateRangeFrom = new Date();
+	dateRangeFrom.setDate(dateRangeFrom.getDate()-15);
+	const last15days = DATA.filter(function(d){
+		return isDateInRange(d.year,d.month,d.day);
+	});
 
 
+	// last fifteen days for selected category
+	MANUALLY_SORTED_CATEGORIES.forEach( (categoryObj) => {
+		const category = categoryObj.category;
+		//console.log("matching category (",category,") with SELECTED_ANIMAL (", SELECTED_ANIMAL, ")");
+
+		if(SELECTED_ANIMAL === category.split(".")[1]){
+			//console.log("Found selected animal : ", category);
+			currentDate = new Date(dateRangeFrom);
+			for(;currentDate <= dateRangeTo;currentDate.setDate(currentDate.getDate()+1)){
+				for(let h=0;h<24;h++){
+					const dayHourObservations = last15days.filter(function(d){
+						let match = d.hour==h && d.day == currentDate.getDate() &&
+							getManualCategoryForImage(d.image) === category;
+
+						return match;
+					});
+					cameraArray.forEach( (camera) => {
+						let animalCount = dayHourObservations.reduce(function(a,d){
+							if(d.camera === camera){
+								return a + +d.count;
+							}else{
+								return a;
+							}
+						},0);
+						const timeString = numericToTextMonth(currentDate.getMonth()+1).substr(0,3) + " " + currentDate.getDate() + " " + String(h).padStart(2,0) + ":00";
+						const obj = {
+							"timestamp" : timeString,
+							"camera" : camera,
+							"observations" : animalCount
+						};
+						lastFifteenDaysSelectedAnimalObsObject.push(obj);
+					});
+				}
+			}
+		}
 	});
 
 
 	// #### Start rendering data into graphs ####
 	createHBarGraph("#obsPerAnimal", "Total images per category", obsPerAnimalObject, "category", "count");
+
+
+	createStackedHBarGraph("#obsPerSelectedAnimal", "Last 15 days", lastFifteenDaysSelectedAnimalObsObject, "timestamp", "camera", "observations", 15, 1, true, 4);
 
 	// pie charts, one for each camera
 	createPieChart("#obsPieTop", "Animal distribution - Top camera", obsPerCategoryCameraObject["TOP"]);

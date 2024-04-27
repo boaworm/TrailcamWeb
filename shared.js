@@ -249,7 +249,7 @@ function createStackedHBarGraph(divName, title, dataObject, barLabel, groupLabel
 				.data(daytimeArr)
 				.enter()
 				.append("circle")
-					.attr("cx", function(d,i){ return 10 + d*18;})
+					.attr("cx", function(d,i){ return 10 + d*20.2;})
 					.attr("cy", function(d,i){ return height-8})
 					.attr("r", 3)
 					.style("fill", "orange"); 
