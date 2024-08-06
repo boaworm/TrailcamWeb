@@ -32,8 +32,13 @@
 				calculateCategories : function(){
 					this.CLASSIFICATIONS = [];
 					MANUALLY_SORTED_CATEGORIES.forEach( (categoryObj) => {	
-						this.CLASSIFICATIONS.push( categoryObj.category.split(".")[1] );
+						if(categoryObj.category === ""){
+							//console.log("ignoring...");
+						}else{
+							this.CLASSIFICATIONS.push( categoryObj.category.split(".")[1] );
+						}
 					});
+					this.CLASSIFICATIONS.sort();
 					// console.log("CLASSIFICATIONS now have " + this.CLASSIFICATIONS.length + " items in it");
 				},
 				animalUpdate : function(){
